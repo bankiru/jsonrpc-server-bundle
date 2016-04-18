@@ -1,0 +1,35 @@
+services:
+  jsonrpc.controller_resolver:
+    class: Bankiru\Api\Rpc\Routing\ControllerResolver\ControllerResolver
+    arguments:
+    - "@service_container"
+    - "@jsonrpc.controller_name_parser"
+    - "@logger"
+
+  jsonrpc.view.notification_response:
+    class: Bankiru\Api\JsonRpc\Listener\NotificationResponseListener
+    tags:
+    - { name: kernel.event_listener, event: rpc.view, method: onNullResponse, priority: -255 }
+
+  jsonrpc.view.serialize_response:
+    class: Bankiru\Api\JsonRpc\Listener\SerializedJsonRpcResponseListener
+    arguments:
+    - "@jms_serializer"
+    tags:
+    - { name: kernel.event_listener, event: rpc.view, method: onPlainResponse, priority: -254 }
+
+  jsonrpc.reponse_listener.match_id:
+    class: Bankiru\Api\JsonRpc\Listener\IdMatcherListener
+    tags:
+    - { name: kernel.event_listener, event: rpc.response, method: onFilterResponse, priority: -254 }
+
+  jsonrpc.controller_name_parser:
+    class: Bankiru\Api\JsonRpc\Controller\JsonRpcControllerNameParser
+    parent: rpc.controller_name_parser
+
+  jsonrpc.exception_listener:
+    class: Bankiru\Api\JsonRpc\Listener\ExceptionHandlerListener
+    arguments:
+    - "%kernel.debug%"
+    tags:
+    - { name: kernel.event_listener, event: rpc.exception, method: onJsonRpcException }

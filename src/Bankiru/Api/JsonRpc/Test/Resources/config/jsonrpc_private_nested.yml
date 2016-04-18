@@ -1,0 +1,2 @@
+entity/nested:
+  controller: "JsonRpcTestBundle:Test:entity"

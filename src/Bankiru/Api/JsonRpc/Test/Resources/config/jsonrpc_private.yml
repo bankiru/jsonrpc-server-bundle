@@ -1,0 +1,8 @@
+entity/private:
+  controller: "JsonRpcTestBundle:Test:entity"
+  default_context: true
+  context: private
+
+private:
+  resource: jsonrpc_private_nested.yml
+  context: private

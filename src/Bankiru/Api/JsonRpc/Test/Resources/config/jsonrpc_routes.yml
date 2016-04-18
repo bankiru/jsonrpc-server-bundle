@@ -1,0 +1,22 @@
+sample:
+  controller: "JsonRpcTestBundle:Test:sample"
+
+notification:
+  controller: "JsonRpcTestBundle:Test:notification"
+
+array:
+  controller: "JsonRpcTestBundle:Test:array"
+
+custom/method:
+  controller: "JsonRpcTestBundle:Test:array"
+
+exception:
+  controller: "JsonRpcTestBundle:Failing:failure"
+
+entity:
+  controller: "JsonRpcTestBundle:Test:entity"
+
+annotation:
+  resource: "@JsonRpcTestBundle/JsonRpc"
+  prefix: prefix/
+
