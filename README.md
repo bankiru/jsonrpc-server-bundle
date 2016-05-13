@@ -1,3 +1,13 @@
+[![Latest Stable Version](https://poser.pugx.org/bankiru/jsonrpc-server-bundle/v/stable)](https://packagist.org/packages/bankiru/jsonrpc-server-bundle) 
+[![Total Downloads](https://poser.pugx.org/bankiru/jsonrpc-server-bundle/downloads)](https://packagist.org/packages/bankiru/jsonrpc-server-bundle) 
+[![Latest Unstable Version](https://poser.pugx.org/bankiru/jsonrpc-server-bundle/v/unstable)](https://packagist.org/packages/bankiru/jsonrpc-server-bundle) 
+[![License](https://poser.pugx.org/bankiru/jsonrpc-server-bundle/license)](https://packagist.org/packages/bankiru/jsonrpc-server-bundle)
+
+[![Build Status](https://travis-ci.org/bankiru/jsonrpc-server-bundle.svg)](https://travis-ci.org/bankiru/jsonrpc-server-bundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/bankiru/jsonrpc-server-bundle/badges/quality-score.png)](https://scrutinizer-ci.com/g/bankiru/jsonrpc-server-bundle/)
+[![Code Coverage](https://scrutinizer-ci.com/g/bankiru/jsonrpc-server-bundle/badges/coverage.png)](https://scrutinizer-ci.com/g/bankiru/jsonrpc-server-bundle/)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/8b87b0a7-c8f9-4d7b-9b91-1e4e762a686f/mini.png)](https://insight.sensiolabs.com/projects/8b87b0a7-c8f9-4d7b-9b91-1e4e762a686f)
+
 # JSON-RPC Server bundle
 
 This bundle provides JSON-RPC 2.0 server ontop of the `bankiru/rpc-server-bundle` library.
