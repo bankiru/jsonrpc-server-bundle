@@ -14,7 +14,7 @@
     "php": "~5.5 || ~7.0",
     "symfony/http-kernel": "~2.7 || ~3.0",
     "scaytrase/json-rpc-client": "~1.0",
-    "bankiru/rpc-server-bundle": "~1.0",
+    "bankiru/rpc-server-bundle": "~1.1",
     "nelmio/api-doc-bundle": "~2.9",
     "jms/serializer-bundle": "~1.1"
   },
