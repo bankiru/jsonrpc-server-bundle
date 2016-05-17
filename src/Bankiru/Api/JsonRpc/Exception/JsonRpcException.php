@@ -40,4 +40,12 @@ class JsonRpcException extends \Exception implements JsonRpcExceptionInterface
     {
         $this->jsonRpcError = $jsonRpcError;
     }
+
+    public static function create($code, $message, $data = null)
+    {
+        $ex               = new static();
+        $ex->jsonRpcError = new JsonRpcError($code, $message, $data);
+
+        return $ex;
+    }
 }

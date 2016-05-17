@@ -6,9 +6,12 @@
 
 namespace Bankiru\Api\JsonRpc\Listener;
 
+use Bankiru\Api\JsonRpc\Exception\JsonRpcException;
 use Bankiru\Api\JsonRpc\Exception\JsonRpcExceptionInterface;
 use Bankiru\Api\JsonRpc\Specification\JsonRpcResponse;
 use Bankiru\Api\Rpc\Event\GetExceptionResponseEvent;
+use Bankiru\Api\Rpc\Exception\InvalidMethodParametersException;
+use Bankiru\Api\Rpc\Routing\Exception\MethodNotFoundException;
 use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 
@@ -32,6 +35,20 @@ final class ExceptionHandlerListener
         }
 
         $exception = $event->getException();
+        if ($exception instanceof InvalidMethodParametersException) {
+            $exception =
+                JsonRpcException::create(
+                    JsonRpcError::INVALID_PARAMS,
+                    $exception->getMessage(),
+                    $exception->getTrace());
+        } elseif ($exception instanceof MethodNotFoundException) {
+            $exception =
+                JsonRpcException::create(
+                    JsonRpcError::METHOD_NOT_FOUND,
+                    $exception->getMessage(),
+                    $exception->getTrace());
+        }
+
         if ($exception instanceof JsonRpcExceptionInterface) {
             $event->setResponse(new JsonRpcResponse($request->getId(), null, $exception->getJsonRpcError()));
 
