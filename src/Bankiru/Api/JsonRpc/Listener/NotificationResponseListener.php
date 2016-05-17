@@ -23,21 +23,15 @@ final class NotificationResponseListener
      */
     public function onNullResponse(ViewEvent $event)
     {
-        $response = $event->getResponse();
         $request  = $event->getRequest();
 
         if (!$request instanceof JsonRpcRequestInterface) {
             return;
         }
 
-        if ($response === null) {
-            if ($request->isNotification()) {
-                $event->setResponse(new JsonRpcResponse());
-
-                return;
-            }
-
-            throw new \RuntimeException('Response returned is null but request was not notification');
+        // bypass view event
+        if ($request->isNotification()) {
+            $event->setResponse(new JsonRpcResponse());
         }
     }
 }
