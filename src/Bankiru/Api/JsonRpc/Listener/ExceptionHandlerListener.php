@@ -50,7 +50,12 @@ final class ExceptionHandlerListener
         }
 
         if ($exception instanceof JsonRpcExceptionInterface) {
-            $event->setResponse(new JsonRpcResponse($request->getId(), null, $exception->getJsonRpcError()));
+            $error = $exception->getJsonRpcError();
+            if (!$this->debug) {
+                $error = new JsonRpcError($error->getCode(), $error->getMessage());
+            }
+
+            $event->setResponse(new JsonRpcResponse($request->getId(), null, $error));
 
             return;
         }
