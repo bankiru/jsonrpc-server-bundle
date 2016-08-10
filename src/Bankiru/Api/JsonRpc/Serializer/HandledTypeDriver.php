@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 24.03.2016
- * Time: 10:26
- */
 
 namespace Bankiru\Api\JsonRpc\Serializer;
 

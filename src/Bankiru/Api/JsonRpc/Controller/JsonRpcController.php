@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 11.02.2016
- * Time: 15:24
- */
 
 namespace Bankiru\Api\JsonRpc\Controller;
 
@@ -21,7 +15,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class JsonRpcController extends RpcController
 {
-
     /**
      * JSON-RPC Controller
      *

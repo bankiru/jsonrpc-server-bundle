@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 11.02.2016
- * Time: 16:25
- */
 
 namespace Bankiru\Api\JsonRpc\DependencyInjection;
 
@@ -18,7 +12,6 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class JsonRpcExtension extends Extension implements CompilerPassInterface
 {
-
     /** {@inheritdoc} */
     public function load(array $configs, ContainerBuilder $container)
     {

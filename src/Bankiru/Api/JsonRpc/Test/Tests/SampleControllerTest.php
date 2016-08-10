@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 11.02.2016
- * Time: 18:42
- */
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 

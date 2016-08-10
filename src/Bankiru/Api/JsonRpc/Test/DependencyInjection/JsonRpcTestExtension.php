@@ -1,8 +1,4 @@
 <?php
-/**
- * User: scaytrase
- * Created: 2016-02-14 17:23
- */
 
 namespace Bankiru\Api\JsonRpc\Test\DependencyInjection;
 
@@ -12,7 +8,6 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 class JsonRpcTestExtension extends Extension implements PrependExtensionInterface
 {
-
     /** {@inheritdoc} */
     public function load(array $configs, ContainerBuilder $container)
     {

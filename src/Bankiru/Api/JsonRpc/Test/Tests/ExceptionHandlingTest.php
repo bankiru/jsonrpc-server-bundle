@@ -1,8 +1,4 @@
 <?php
-/**
- * User: scaytrase
- * Created: 2016-02-14 13:23
- */
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 

@@ -1,8 +1,4 @@
 <?php
-/**
- * User: scaytrase
- * Created: 2016-02-14 13:32
- */
 
 namespace Bankiru\Api\JsonRpc\Listener;
 

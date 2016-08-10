@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 12.02.2016
- * Time: 14:11
- */
 
 namespace Bankiru\Api\JsonRpc\Test\Entity;
 
@@ -14,11 +8,6 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Since;
 use JMS\Serializer\Annotation\Type;
 
-/**
- * Class SampleEntity
- *
- * @package Bankiru\Service\Insurance\Entity
- */
 class SampleEntity
 {
     /**

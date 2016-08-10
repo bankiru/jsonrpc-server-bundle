@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 13.04.2016
- * Time: 10:46
- */
 
 namespace Bankiru\Api\JsonRpc\Test\Tests\Fixtures;
 
@@ -30,7 +24,6 @@ class Kernel extends KernelForTest
             new RpcBundle(),
             new JsonRpcBundle(),
             new JsonRpcTestBundle(),
-            //            new \Symfony\Bundle\DebugBundle\DebugBundle(),
         ];
     }
 

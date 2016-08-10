@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 16.02.2016
- * Time: 15:14
- */
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
@@ -14,7 +8,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AnnotatedControllerTest extends JsonRpcTestCase
 {
-
     public function testNestedContext()
     {
         $client   = self::createClient();

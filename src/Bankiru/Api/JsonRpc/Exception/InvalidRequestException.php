@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: batanov.pavel
- * Date: 17.05.2016
- * Time: 11:38
- */
 
 namespace Bankiru\Api\JsonRpc\Exception;
 
