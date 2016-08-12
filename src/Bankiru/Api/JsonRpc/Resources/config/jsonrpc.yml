@@ -16,13 +16,6 @@ services:
     tags:
     - { name: kernel.event_listener, event: rpc.response, method: filterNotificationResponse, priority: -255 }
 
-  jsonrpc.view.serialize_response:
-    class: Bankiru\Api\JsonRpc\Listener\SerializedJsonRpcResponseListener
-    arguments:
-    - "@jms_serializer"
-    tags:
-    - { name: kernel.event_listener, event: rpc.view, method: onPlainResponse, priority: -254 }
-
   jsonrpc.reponse_listener.match_id:
     class: Bankiru\Api\JsonRpc\Listener\IdMatcherListener
     tags:
