@@ -38,3 +38,10 @@ services:
     - "%kernel.debug%"
     tags:
     - { name: kernel.event_listener, event: rpc.exception, method: onJsonRpcException }
+
+  jsonrpc.http_exception_listener:
+    class: Bankiru\Api\JsonRpc\Listener\HttpExceptionListener
+    arguments:
+    - "%kernel.debug%"
+    tags:
+    - { name: kernel.event_listener, event: kernel.exception, method: onJsonRpcException }
