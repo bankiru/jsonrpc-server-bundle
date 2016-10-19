@@ -16,6 +16,10 @@ class JmsDriverPass implements CompilerPassInterface
             return;
         }
 
+        if (!$container->has('jms_serializer.metadata.doctrine_type_driver')) {
+            return;
+        }
+
         $container->register('jms_serializer.driver.relation', HandledTypeDriver::class)
                   ->setArguments(
                       [
