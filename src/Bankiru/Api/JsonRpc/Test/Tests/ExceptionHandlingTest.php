@@ -6,6 +6,7 @@ use Bankiru\Api\JsonRpc\JsonRpcBundle;
 use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\JsonRpc\SyncResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionHandlingTest extends JsonRpcTestCase
 {
@@ -19,18 +20,18 @@ class ExceptionHandlingTest extends JsonRpcTestCase
             [
                 [
                     'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'sample',
-                    'id' => 'test',
-                    'params' => [
+                    'method'  => 'sample',
+                    'id'      => 'test',
+                    'params'  => [
                         'param1' => 'value1',
                         'param2' => 100500,
                     ],
                 ],
                 [
                     'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'exception',
-                    'id' => 'test2',
-                    'params' => [
+                    'method'  => 'exception',
+                    'id'      => 'test2',
+                    'params'  => [
                         'param1' => 'value1',
                         'param2' => 100500,
                     ],
@@ -38,14 +39,13 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                 [
                     //notification - no id
                     'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'notification',
-                    'param' => [
+                    'method'  => 'notification',
+                    'param'   => [
                         'notification' => 'message',
                     ],
                 ],
             ]
         );
-
 
         self::assertTrue($response->isSuccessful(), $response->getContent());
         $body = json_decode($response->getContent());
@@ -62,5 +62,50 @@ class ExceptionHandlingTest extends JsonRpcTestCase
         self::assertFalse($jsonResponses[1]->isSuccessful());
         self::assertEquals(JsonRpcError::INTERNAL_ERROR, $jsonResponses[1]->getError()->getCode());
         self::assertEquals('This is the malfunction controller', $jsonResponses[1]->getError()->getMessage());
+    }
+
+    public function getInvalidRequests()
+    {
+        return [
+            'No method'        => [
+                [
+                    'jsonrpc' => JsonRpcBundle::VERSION,
+                    'id'      => 'test',
+                    'params'  => [],
+                ],
+            ],
+            'No id'            => [
+                [
+                    'id'     => 'test',
+                    'method' => 'sample',
+                    'params' => [],
+                ],
+            ],
+            'No id, no method' => [
+                [
+                    'id'     => 'test',
+                    'params' => [],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getInvalidRequests
+     *
+     * @param array $request
+     */
+    public function testNoMethodResultsInHttp400Error(array $request)
+    {
+        $client = self::createClient();
+
+        $response = $this->sendRequest(
+            $client,
+            '/test/',
+            $request
+        );
+
+        self::assertFalse($response->isSuccessful());
+        self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 }
