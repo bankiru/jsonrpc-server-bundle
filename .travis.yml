@@ -10,18 +10,18 @@ php:
 env:
   - PACKAGES='symfony/symfony=2.7.*'
   - PACKAGES='symfony/symfony=2.8.*'
-  - PACKAGES='symfony/symfony=3.0.*'
   - PACKAGES='symfony/symfony=3.1.*'
-  - PACKAGES='symfony/symfony=~3.2@dev twig/twig:~1.27@dev'
+  - PACKAGES='symfony/symfony=3.2.*'
+  - PACKAGES='symfony/symfony=~3.3@dev'
 
 matrix:
-    include:
-      - php: 5.5
-        env: PACKAGES='symfony/symfony=2.7.*' deps='low'
+  include:
+    - php: 5.5
+      env: PACKAGES='symfony/symfony=2.7.*' deps='low'
 
-    allow_failures:
-        - php: hhvm
-        - php: nightly
+  allow_failures:
+    - php: hhvm
+    - php: nightly
 
 before_install:
   - travis_retry composer self-update

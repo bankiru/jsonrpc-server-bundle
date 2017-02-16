@@ -1,10 +1,12 @@
 framework:
     test: ~
-    secret:          test
+    secret:       test
+    assets:       false
     router:
         resource: "%kernel.root_dir%/routing.yml"
     templating:
         engines: ['twig']
+    translator: ~
 
 services:
   logger:
