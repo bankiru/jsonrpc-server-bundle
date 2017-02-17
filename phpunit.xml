@@ -23,5 +23,8 @@
             <directory>vendor/</directory>
             <directory>build/</directory>
         </blacklist>
+        <whitelist>
+            <directory>./</directory>
+        </whitelist>
     </filter>
 </phpunit>
