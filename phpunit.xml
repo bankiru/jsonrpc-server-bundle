@@ -21,6 +21,7 @@
     <filter>
         <blacklist>
             <directory>vendor/</directory>
+            <directory>build/</directory>
         </blacklist>
     </filter>
 </phpunit>

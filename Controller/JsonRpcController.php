@@ -8,7 +8,6 @@ use Bankiru\Api\JsonRpc\Specification\JsonRpcRequest;
 use Bankiru\Api\JsonRpc\Specification\RichJsonRpcRequest;
 use Bankiru\Api\Rpc\Controller\RpcController;
 use Bankiru\Api\Rpc\Routing\ControllerResolver\ControllerResolverInterface;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use ScayTrase\Api\Rpc\RpcResponseInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -18,30 +17,11 @@ final class JsonRpcController extends RpcController
     /**
      * JSON-RPC Controller
      *
-     * @ApiDoc(
-     *     resource="HTTP JSON-RPC Endpoints",
-     *     description ="HTTP JSON-RPC Endpoint",
-     *     requirements ={
-     *      {
-     *          "name"="jsonrpc",
-     *          "dataType"="string",
-     *          "requirement"="2.0",
-     *          "description"="JSON-RPC version constant"
-     *      }
-     *     },
-     *     parameters={
-     *        {"name"="jsonrpc", "dataType"="string", "required"=true, "description"="protocol version"},
-     *        {"name"="id", "dataType"="string", "required"=false, "description"="request id (omit for notification)"},
-     *        {"name"="method", "dataType"="string", "required"=true, "description"="rpc method"},
-     *        {"name"="params", "dataType"="mixed|array|string|object", "required"=false, "description"="method
-     *        params"},
-     *     }
-     * )
-     *
-     *
      * @param Request $request
      *
      * @return JsonRpcHttpResponse
+     *
+     * @throws BadRequestHttpException
      * @throws RpcMethodNotFoundException
      */
     public function jsonRpcAction(Request $request)
@@ -50,7 +30,7 @@ final class JsonRpcController extends RpcController
 
         $jsonrpc = json_decode($request->getContent());
         if (null === $jsonrpc || json_last_error() !== JSON_ERROR_NONE) {
-            throw new BadRequestHttpException('Not an valid json request');
+            throw new BadRequestHttpException('Not an valid JSON request');
         }
 
         $singleRequest = false;
@@ -72,6 +52,14 @@ final class JsonRpcController extends RpcController
         }
 
         return new JsonRpcHttpResponse($responses);
+    }
+
+    /**
+     * @return ControllerResolverInterface
+     */
+    protected function getResolver()
+    {
+        return $this->get('jsonrpc.controller_resolver');
     }
 
     /**
@@ -97,13 +85,5 @@ final class JsonRpcController extends RpcController
         }
 
         return $jsonResponse;
-    }
-
-    /**
-     * @return ControllerResolverInterface
-     */
-    protected function getResolver()
-    {
-        return $this->get('jsonrpc.controller_resolver');
     }
 }

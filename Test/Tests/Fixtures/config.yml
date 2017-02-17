@@ -4,8 +4,7 @@ framework:
     assets:       false
     router:
         resource: "%kernel.root_dir%/routing.yml"
-    templating:
-        engines: ['twig']
+    templating:   false
     translator: ~
 
 services:

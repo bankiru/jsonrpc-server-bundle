@@ -19,8 +19,6 @@ class Kernel extends KernelForTest
         return [
             new FrameworkBundle(),
             new JMSSerializerBundle(),
-            new NelmioApiDocBundle(),
-            new TwigBundle(),
             new RpcBundle(),
             new JsonRpcBundle(),
             new JsonRpcTestBundle(),

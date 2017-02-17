@@ -6,7 +6,6 @@ use Bankiru\Api\JsonRpc\JsonRpcBundle;
 use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\JsonRpc\SyncResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionHandlingTest extends JsonRpcTestCase
 {
@@ -74,7 +73,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                     'params'  => [],
                 ],
             ],
-            'No id'            => [
+            'No version'       => [
                 [
                     'id'     => 'test',
                     'method' => 'sample',
@@ -91,21 +90,21 @@ class ExceptionHandlingTest extends JsonRpcTestCase
     }
 
     /**
-     * @dataProvider getInvalidRequests
+     * @dataProvider             getInvalidRequests
      *
      * @param array $request
+     *
+     * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @expectedExceptionMessageRegExp |^Invalid JSONRPC 2.0 Request. Missing fields .+$|
      */
-    public function testNoMethodResultsInHttp400Error(array $request)
+    public function testInvalidJsonRpcResultsIn400Response(array $request)
     {
         $client = self::createClient();
 
-        $response = $this->sendRequest(
+        $this->sendRequest(
             $client,
             '/test/',
             $request
         );
-
-        self::assertFalse($response->isSuccessful());
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 }

@@ -5,6 +5,7 @@ namespace Bankiru\Api\JsonRpc\Test\Tests;
 use Bankiru\Api\JsonRpc\JsonRpcBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class AnnotatedControllerTest extends JsonRpcTestCase
 {
@@ -32,19 +33,17 @@ class AnnotatedControllerTest extends JsonRpcTestCase
         self::assertTrue($jsonResponse->isSuccessful());
     }
 
+    /**
+     * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @expectedExceptionMessage Not an valid JSON request
+     */
     public function testEmptyRequest()
     {
         $client   = self::createClient();
-        $response = $this->sendRequest(
+        $this->sendRequest(
             $client,
             '/test/private/',
             null
         );
-
-        self::assertFalse($response->isSuccessful());
-        $content = $response->getContent();
-        json_decode($content, true);
-        self::assertEquals(JSON_ERROR_NONE, json_last_error());
-        self::assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
     }
 }
