@@ -32,14 +32,14 @@ class JsonRpcTestExtension extends Extension implements PrependExtensionInterfac
                                         'path'      => '/test/',
                                         'resources' => '@JsonRpcTestBundle/Resources/config/jsonrpc_routes.yml',
                                         'defaults'  => [
-                                            '_controller' => 'JsonRpcBundle:JsonRpc:jsonRpc',
+                                            '_controller' => 'BankiruJsonRpcServerBundle:JsonRpc:jsonRpc',
                                             '_format'     => 'json',
                                         ],
                                     ],
                                     'test_private' => [
                                         'path'      => '/test/private/',
                                         'defaults'  => [
-                                            '_controller' => 'JsonRpcBundle:JsonRpc:jsonRpc',
+                                            '_controller' => 'BankiruJsonRpcServerBundle:JsonRpc:jsonRpc',
                                             '_format'     => 'json',
                                         ],
                                         'resources' => [

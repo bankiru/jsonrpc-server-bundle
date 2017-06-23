@@ -1,6 +1,6 @@
 <?php
 
-namespace Bankiru\Api\JsonRpc\Serializer;
+namespace Bankiru\Api\JsonRpc\Adapters\JMS;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -20,8 +20,10 @@ final class RelationsHandler
      *
      * @param EntityManagerInterface $manager
      */
-    public function __construct(EntityManagerInterface $manager) { $this->manager = $manager; }
-
+    public function __construct(EntityManagerInterface $manager)
+    {
+        $this->manager = $manager;
+    }
 
     public function serializeRelation(JsonSerializationVisitor $visitor, $relation, array $type, Context $context)
     {
@@ -34,23 +36,6 @@ final class RelationsHandler
         }
 
         return $this->getSingleEntityRelation($relation);
-    }
-
-    /**
-     * @param $relation
-     *
-     * @return array|mixed
-     */
-    protected function getSingleEntityRelation($relation)
-    {
-        $metadata = $this->manager->getClassMetadata(get_class($relation));
-
-        $ids = $metadata->getIdentifierValues($relation);
-        if (!$metadata->isIdentifierComposite) {
-            $ids = array_shift($ids);
-        }
-
-        return $ids;
     }
 
     public function deserializeRelation(JsonDeserializationVisitor $visitor, $relation, array $type, Context $context)
@@ -86,5 +71,22 @@ final class RelationsHandler
         }
 
         return $objects;
+    }
+
+    /**
+     * @param $relation
+     *
+     * @return array|mixed
+     */
+    private function getSingleEntityRelation($relation)
+    {
+        $metadata = $this->manager->getClassMetadata(get_class($relation));
+
+        $ids = $metadata->getIdentifierValues($relation);
+        if (!$metadata->isIdentifierComposite) {
+            $ids = array_shift($ids);
+        }
+
+        return $ids;
     }
 }

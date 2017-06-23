@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Http;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\JsonRpcErrorInterface;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,18 +24,13 @@ final class JsonRpcHttpResponse extends JsonResponse
             return;
         }
 
-        if (!is_array($jsonRpc)) {
-            parent::__construct($this->formatJsonRpcResponse($jsonRpc), $status, $headers);
+        if (is_array($jsonRpc)) {
+            parent::__construct(array_map([$this, 'formatJsonRpcResponse'], $jsonRpc), $status, $headers);
 
             return;
         }
 
-        $data = [];
-        foreach ($jsonRpc as $response) {
-            $data[] = $this->formatJsonRpcResponse($response);
-        }
-
-        parent::__construct($data, $status, $headers);
+        parent::__construct($this->formatJsonRpcResponse($jsonRpc), $status, $headers);
     }
 
     /**
@@ -46,7 +41,7 @@ final class JsonRpcHttpResponse extends JsonResponse
     private function formatJsonRpcResponse(JsonRpcResponseInterface $jsonRpc)
     {
         $data = [
-            'jsonrpc' => JsonRpcBundle::VERSION,
+            'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
             'id'      => $jsonRpc->getId(),
         ];
 
@@ -54,13 +49,13 @@ final class JsonRpcHttpResponse extends JsonResponse
             $data['result'] = $jsonRpc->getBody();
 
             return $data;
-        } else {
-            $error                    = $jsonRpc->getError();
-            $data['error']['code']    = $error->getCode();
-            $data['error']['message'] = $error->getMessage();
-            $data['error']['data']    = $error instanceof JsonRpcErrorInterface ? $error->getData() : null;
-
-            return $data;
         }
+
+        $error                    = $jsonRpc->getError();
+        $data['error']['code']    = $error->getCode();
+        $data['error']['message'] = $error->getMessage();
+        $data['error']['data']    = $error instanceof JsonRpcErrorInterface ? $error->getData() : null;
+
+        return $data;
     }
 }

@@ -16,7 +16,7 @@ class RouterTest extends WebTestCase
         $context = new RequestContext();
         $context->setMethod('POST');
         $router->setContext($context);
-        $router->match('/test/');
+        self::assertNotEmpty($router->match('/test/'));
     }
 
     public function testRpcRouterCollection()
@@ -27,7 +27,7 @@ class RouterTest extends WebTestCase
             /** @var Router $router */
             $router = $client->getContainer()->get('rpc.endpoint_router.' . $endpoint);
             self::assertNotNull($router);
-            $collection = $router->getCollection();
+            $collection = $router->getMethodCollection();
             self::assertNotNull($router);
             self::assertInstanceOf(MethodCollection::class, $collection);
 

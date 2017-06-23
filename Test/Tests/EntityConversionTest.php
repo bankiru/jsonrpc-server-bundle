@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
 class EntityConversionTest extends JsonRpcTestCase
@@ -13,7 +13,7 @@ class EntityConversionTest extends JsonRpcTestCase
             self::createClient(),
             '/test/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                 'method'  => 'entity',
                 'id'      => 'test',
                 'params'  => [
@@ -40,7 +40,7 @@ class EntityConversionTest extends JsonRpcTestCase
             self::createClient(),
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                 'method'  => 'entity/private',
                 'id'      => 'test',
                 'params'  => [
@@ -65,14 +65,13 @@ class EntityConversionTest extends JsonRpcTestCase
         self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'});
     }
 
-
     public function testNestedContext()
     {
         $response = $this->sendRequest(
             self::createClient(),
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                 'method'  => 'entity/nested',
                 'id'      => 'test',
                 'params'  => [

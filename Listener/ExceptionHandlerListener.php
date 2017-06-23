@@ -31,6 +31,7 @@ final class ExceptionHandlerListener
         }
 
         $exception = $event->getException();
+
         if ($exception instanceof InvalidMethodParametersException) {
             $exception =
                 JsonRpcException::create(

@@ -2,29 +2,11 @@
 
 namespace Bankiru\Api\JsonRpc\Serializer;
 
+use Bankiru\Api\JsonRpc\Adapters\JMS\HandledType as BaseHandledType;
+
 /**
- * Class ApiRelation
- *
- * @package Bankiru\Api\ApiClientBridge\Serializer
- * @Annotation
- * @Target("PROPERTY")
+ * @deprecated
  */
-class HandledType
+class HandledType extends BaseHandledType
 {
-    public $handler;
-
-    /**
-     * HandledType constructor.
-     *
-     * @param $handler
-     */
-    public function __construct($handler = 'Relation') { $this->handler = $handler; }
-
-    /**
-     * @return string
-     */
-    public function getHandler()
-    {
-        return $this->handler;
-    }
 }

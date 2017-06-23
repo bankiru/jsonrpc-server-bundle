@@ -1,6 +1,6 @@
 <?php
 
-namespace Bankiru\Api\JsonRpc\Serializer;
+namespace Bankiru\Api\JsonRpc\Adapters\JMS;
 
 use Doctrine\Common\Annotations\Reader;
 use JMS\Serializer\Metadata\PropertyMetadata;

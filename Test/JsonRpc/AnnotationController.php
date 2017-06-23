@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  * @package Bankiru\Api\JsonRpc\Test\JsonRpc
  * @Method("annotation")
  */
-class AnnotationController extends Controller
+final class AnnotationController extends Controller
 {
     /**
      * @return array

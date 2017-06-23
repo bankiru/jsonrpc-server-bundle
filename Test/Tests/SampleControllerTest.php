@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
 class SampleControllerTest extends JsonRpcTestCase
@@ -14,19 +14,19 @@ class SampleControllerTest extends JsonRpcTestCase
             '/test/',
             [
                 [
-                    'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'sample',
-                    'id' => 'test',
-                    'params' => [
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'method'  => 'sample',
+                    'id'      => 'test',
+                    'params'  => [
                         'param1' => 'value1',
                         'param2' => 100500,
                     ],
                 ],
                 [
                     //notification - no id
-                    'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'notification',
-                    'param' => [
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'method'  => 'notification',
+                    'param'   => [
                         'notification' => 'message',
                     ],
                 ],
@@ -42,10 +42,10 @@ class SampleControllerTest extends JsonRpcTestCase
             self::createClient(),
             '/test/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
-                'method' => 'array',
-                'id' => 'test',
-                'params' => [
+                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                'method'  => 'array',
+                'id'      => 'test',
+                'params'  => [
                     'payload' => 'my-payload',
                 ],
             ]

@@ -4,24 +4,29 @@ php:
   - 5.5
   - 5.6
   - 7
+  - 7.1
   - nightly
   - hhvm
 
 env:
-  - PACKAGES='symfony/symfony=2.7.*'
-  - PACKAGES='symfony/symfony=2.8.*'
-  - PACKAGES='symfony/symfony=3.1.*'
-  - PACKAGES='symfony/symfony=3.2.*'
-  - PACKAGES='symfony/symfony=~3.3@dev'
+  - PACKAGES='symfony/symfony=2.7.*' deps='no'
+  - PACKAGES='symfony/symfony=2.8.*' deps='no'
+  - PACKAGES='symfony/symfony=3.2.*' deps='no'
+  - PACKAGES='symfony/symfony=3.3.*' deps='no'
+  - PACKAGES='symfony/symfony=~3.4@dev' deps='no'
 
 matrix:
-  include:
-    - php: 5.5
-      env: PACKAGES='symfony/symfony=2.7.*' deps='low'
+    include:
+      - php: 5.5
+        env: PACKAGES='symfony/symfony=2.7.*' deps='low'
+      - php: 7.1
+        env: PACKAGES='symfony/symfony=~4.0@dev sensio/framework-extra-bundle=~4.0@dev' deps='no'
+      - php: nightly
+        env: PACKAGES='symfony/symfony=~4.0@dev sensio/framework-extra-bundle=~4.0@dev' deps='no'
 
-  allow_failures:
-    - php: hhvm
-    - php: nightly
+    allow_failures:
+        - php: hhvm
+        - php: nightly
 
 before_install:
   - travis_retry composer self-update
@@ -32,5 +37,6 @@ install:
   - if [ "$deps" = "low" ]; then composer --prefer-source --prefer-lowest --prefer-stable update; composer --prefer-source install; fi;
 
 script:
+  - rm -rf build
   - mkdir -p build
   - vendor/bin/phpunit --colors -c phpunit.xml

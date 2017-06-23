@@ -6,7 +6,7 @@ use Bankiru\Api\JsonRpc\Specification\JsonRpcResponse;
 use Bankiru\Api\JsonRpc\Test\Entity\SampleEntity;
 use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 
-class TestController
+final class TestController
 {
     public function sampleAction(JsonRpcRequestInterface $request)
     {

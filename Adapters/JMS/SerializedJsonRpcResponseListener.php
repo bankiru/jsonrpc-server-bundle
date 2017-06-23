@@ -1,6 +1,6 @@
 <?php
 
-namespace Bankiru\Api\JsonRpc\Listener;
+namespace Bankiru\Api\JsonRpc\Adapters\JMS;
 
 use Bankiru\Api\JsonRpc\Specification\JsonRpcResponse;
 use Bankiru\Api\Rpc\Event\ViewEvent;
@@ -47,7 +47,6 @@ final class SerializedJsonRpcResponseListener
             )
         );
         $event->setResponse($response);
-
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\DependencyInjection\Compiler;
 
-use Bankiru\Api\JsonRpc\Serializer\HandledTypeDriver;
+use Bankiru\Api\JsonRpc\Adapters\JMS\HandledTypeDriver;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -25,5 +25,44 @@ class JmsDriverPass implements CompilerPassInterface
                   );
 
         $container->setAlias('jms_serializer.metadata_driver', 'jms_serializer.driver.relation');
+
+        $container->register('jms_serializer.handler.relation', RelationsHandler::class)
+                  ->setArguments([new Reference('doctrine.orm.entity_manager')])
+                  ->addTag(
+                      'jms_serializer.handler',
+                      [
+                          'type'      => 'Relation',
+                          'direction' => 'serialization',
+                          'format'    => 'json',
+                          'method'    => 'serializeRelation',
+                      ]
+                  )
+                  ->addTag(
+                      'jms_serializer.handler',
+                      [
+                          'type'      => 'Relation',
+                          'direction' => 'deserialization',
+                          'format'    => 'json',
+                          'method'    => 'deserializeRelation',
+                      ]
+                  )
+                  ->addTag(
+                      'jms_serializer.handler',
+                      [
+                          'type'      => 'Relation<?>',
+                          'direction' => 'serialization',
+                          'format'    => 'json',
+                          'method'    => 'serializeRelation',
+                      ]
+                  )
+                  ->addTag(
+                      'jms_serializer.handler',
+                      [
+                          'type'      => 'Relation<?>',
+                          'direction' => 'deserialization',
+                          'format'    => 'json',
+                          'method'    => 'deserializeRelation',
+                      ]
+                  );
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\JsonRpc\SyncResponse;
@@ -18,7 +18,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
             '/test/',
             [
                 [
-                    'jsonrpc' => JsonRpcBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                     'method'  => 'sample',
                     'id'      => 'test',
                     'params'  => [
@@ -27,7 +27,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                     ],
                 ],
                 [
-                    'jsonrpc' => JsonRpcBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                     'method'  => 'exception',
                     'id'      => 'test2',
                     'params'  => [
@@ -37,7 +37,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                 ],
                 [
                     //notification - no id
-                    'jsonrpc' => JsonRpcBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                     'method'  => 'notification',
                     'param'   => [
                         'notification' => 'message',
@@ -68,7 +68,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
         return [
             'No method'        => [
                 [
-                    'jsonrpc' => JsonRpcBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                     'id'      => 'test',
                     'params'  => [],
                 ],

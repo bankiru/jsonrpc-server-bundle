@@ -2,10 +2,8 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class AnnotatedControllerTest extends JsonRpcTestCase
 {
@@ -16,7 +14,7 @@ class AnnotatedControllerTest extends JsonRpcTestCase
             $client,
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
                 'method'  => 'prefix/annotation/sub',
                 'id'      => 'test',
                 'params'  => [
@@ -39,7 +37,7 @@ class AnnotatedControllerTest extends JsonRpcTestCase
      */
     public function testEmptyRequest()
     {
-        $client   = self::createClient();
+        $client = self::createClient();
         $this->sendRequest(
             $client,
             '/test/private/',
