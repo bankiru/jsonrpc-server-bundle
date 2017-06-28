@@ -41,8 +41,8 @@ class HandledTypeDriver implements DriverInterface
             }
 
             /** @var PropertyMetadata $propertyMetadata */
-            /** @var HandledType $annot */
-            $annot = $this->reader->getPropertyAnnotation($propertyMetadata->reflection, HandledType::class);
+            /** @var Relation $annot */
+            $annot = $this->reader->getPropertyAnnotation($propertyMetadata->reflection, Relation::class);
             if (!$annot) {
                 continue;
             }
@@ -56,7 +56,7 @@ class HandledTypeDriver implements DriverInterface
                 $type           = $propertyMetadata->type['params'][0]['name'];
             }
 
-            $handler = $annot->handler ?: 'Relation';
+            $handler = $annot->getHandler() ?: 'Relation';
 
             $newType = sprintf('%s<%s>', $handler, $type);
             if ($isCollection) {

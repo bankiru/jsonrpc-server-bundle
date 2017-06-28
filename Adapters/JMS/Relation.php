@@ -2,6 +2,14 @@
 
 namespace Bankiru\Api\JsonRpc\Adapters\JMS;
 
-final class Relation extends HandledType
+/**
+ * @Annotation
+ * @Target("PROPERTY")
+ */
+class Relation
 {
+    public function getHandler()
+    {
+        return 'Relation';
+    }
 }

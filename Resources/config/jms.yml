@@ -1,0 +1,8 @@
+services:
+
+  jsonrpc.view.serialize_response:
+    class: Bankiru\Api\JsonRpc\Adapters\JMS\SerializedJsonRpcResponseListener
+    arguments:
+    - "@jms_serializer"
+    tags:
+    - { name: kernel.event_listener, event: rpc.view, method: onPlainResponse, priority: -254 }

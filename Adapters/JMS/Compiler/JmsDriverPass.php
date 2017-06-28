@@ -1,8 +1,9 @@
 <?php
 
-namespace Bankiru\Api\JsonRpc\DependencyInjection\Compiler;
+namespace Bankiru\Api\JsonRpc\Adapters\JMS\Compiler;
 
 use Bankiru\Api\JsonRpc\Adapters\JMS\HandledTypeDriver;
+use Bankiru\Api\JsonRpc\Adapters\JMS\RelationsHandler;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
@@ -13,6 +14,10 @@ class JmsDriverPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         if (!$container->has('doctrine')) {
+            return;
+        }
+
+        if (!$container->has('jms_serializer')) {
             return;
         }
 
