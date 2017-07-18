@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Since;
 use JMS\Serializer\Annotation\Type;
 
-class SampleEntity
+class SampleEntity implements \JsonSerializable
 {
     /**
      * @var int|null
@@ -56,5 +56,14 @@ class SampleEntity
     public function getPayload()
     {
         return $this->payload;
+    }
+
+    /** {@inheritdoc} */
+    public function jsonSerialize()
+    {
+        return [
+            'id'              => $this->id,
+            'sample_payload'  => $this->payload,
+        ];
     }
 }

@@ -33,10 +33,12 @@ before_install:
 
 install:
   - composer require --no-update ${PACKAGES}
-  - if [ "$deps" = "no"] || [ -z "$deps" ]; then composer --prefer-source install; fi;
+  - if [ "$deps" = "no" ] || [ -z "$deps" ]; then composer --prefer-source install; fi;
   - if [ "$deps" = "low" ]; then composer --prefer-source --prefer-lowest --prefer-stable update; composer --prefer-source install; fi;
 
 script:
   - rm -rf build
   - mkdir -p build
   - vendor/bin/phpunit --colors -c phpunit.xml
+  - JMS_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml
+  - JMS_BUNDLE=1 DOCTRINE_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml

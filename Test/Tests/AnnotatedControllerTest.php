@@ -14,7 +14,7 @@ class AnnotatedControllerTest extends JsonRpcTestCase
             $client,
             '/test/private/',
             [
-                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'prefix/annotation/sub',
                 'id'      => 'test',
                 'params'  => [
@@ -28,7 +28,7 @@ class AnnotatedControllerTest extends JsonRpcTestCase
         self::assertInstanceOf(\stdClass::class, $content);
 
         $jsonResponse = new SyncResponse($content);
-        self::assertTrue($jsonResponse->isSuccessful());
+        self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
     }
 
     /**

@@ -38,8 +38,8 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
             throw InvalidRequestException::missingFields($missing);
         }
 
-        if (BankiruJsonRpcServerBundle::VERSION !== $source->jsonrpc) {
-            throw InvalidRequestException::invalidVersion(BankiruJsonRpcServerBundle::VERSION, $source->jsonrpc);
+        if (BankiruJsonRpcServerBundle::JSONRPC_VERSION !== $source->jsonrpc) {
+            throw InvalidRequestException::invalidVersion(BankiruJsonRpcServerBundle::JSONRPC_VERSION, $source->jsonrpc);
         }
 
         $request->id         = isset($source->id) ? $source->id : null;
@@ -69,7 +69,7 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
     /** {@inheritdoc} */
     public function getVersion()
     {
-        return BankiruJsonRpcServerBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
     /** @return string */

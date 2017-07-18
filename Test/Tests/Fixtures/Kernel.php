@@ -5,6 +5,7 @@ namespace Bankiru\Api\JsonRpc\Test\Tests\Fixtures;
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use Bankiru\Api\JsonRpc\Test\JsonRpcTestBundle;
 use Bankiru\Api\Rpc\BankiruRpcServerBundle;
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -16,15 +17,24 @@ class Kernel extends KernelForTest
 {
     public function registerBundles()
     {
-        return [
+        $bundles = [
             new FrameworkBundle(),
             new SecurityBundle(),
             new SensioFrameworkExtraBundle(),
-            new JMSSerializerBundle(),
             new BankiruRpcServerBundle(),
             new BankiruJsonRpcServerBundle(),
             new JsonRpcTestBundle(),
         ];
+
+        if (false !== getenv('JMS_BUNDLE')) {
+            $bundles[] = new JMSSerializerBundle();
+        }
+
+        if (false !== getenv('DOCTRINE_BUNDLE')) {
+            $bundles[] = new DoctrineBundle();
+        }
+
+        return $bundles;
     }
 
     public function getCacheDir()

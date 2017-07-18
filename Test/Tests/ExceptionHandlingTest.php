@@ -18,7 +18,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
             '/test/',
             [
                 [
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'method'  => 'sample',
                     'id'      => 'test',
                     'params'  => [
@@ -27,7 +27,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                     ],
                 ],
                 [
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'method'  => 'exception',
                     'id'      => 'test2',
                     'params'  => [
@@ -37,7 +37,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
                 ],
                 [
                     //notification - no id
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'method'  => 'notification',
                     'param'   => [
                         'notification' => 'message',
@@ -68,7 +68,7 @@ class ExceptionHandlingTest extends JsonRpcTestCase
         return [
             'No method'        => [
                 [
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'id'      => 'test',
                     'params'  => [],
                 ],

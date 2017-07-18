@@ -41,7 +41,7 @@ final class JsonRpcHttpResponse extends JsonResponse
     private function formatJsonRpcResponse(JsonRpcResponseInterface $jsonRpc)
     {
         $data = [
-            'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+            'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
             'id'      => $jsonRpc->getId(),
         ];
 

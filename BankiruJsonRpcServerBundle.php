@@ -7,7 +7,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 final class BankiruJsonRpcServerBundle extends Bundle
 {
-    const VERSION = '2.0';
+    const JSONRPC_VERSION = '2.0';
 
     public function getContainerExtension()
     {

@@ -19,3 +19,9 @@ security:
 
   access_control:
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+jsonrpc_server:
+  adapters:
+    jms:
+      relation_handlers:
+        Relation: doctrine.orm.entity_manager

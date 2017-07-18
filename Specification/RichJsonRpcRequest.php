@@ -52,7 +52,7 @@ final class RichJsonRpcRequest implements RequestInterface, JsonRpcRequestInterf
     /** {@inheritdoc} */
     public function getVersion()
     {
-        return BankiruJsonRpcServerBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
     /** {@inheritdoc} */

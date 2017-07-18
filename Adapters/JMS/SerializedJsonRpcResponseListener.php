@@ -19,7 +19,10 @@ final class SerializedJsonRpcResponseListener
      *
      * @param Serializer $serializer
      */
-    public function __construct(Serializer $serializer) { $this->serializer = $serializer; }
+    public function __construct(Serializer $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
     public function onPlainResponse(ViewEvent $event)
     {
@@ -38,12 +41,10 @@ final class SerializedJsonRpcResponseListener
 
         $response = new JsonRpcResponse(
             $request->getId(),
-            json_decode(
-                $this->serializer->serialize(
-                    $event->getResponse(),
-                    'json',
-                    $this->createSerializerContext($event)
-                )
+            $this->serializer->toArray(
+                $event->getResponse(),
+                $this->createSerializerContext($event)
+
             )
         );
         $event->setResponse($response);

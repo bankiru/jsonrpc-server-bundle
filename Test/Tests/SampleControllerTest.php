@@ -14,7 +14,7 @@ class SampleControllerTest extends JsonRpcTestCase
             '/test/',
             [
                 [
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'method'  => 'sample',
                     'id'      => 'test',
                     'params'  => [
@@ -24,7 +24,7 @@ class SampleControllerTest extends JsonRpcTestCase
                 ],
                 [
                     //notification - no id
-                    'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                     'method'  => 'notification',
                     'param'   => [
                         'notification' => 'message',
@@ -42,7 +42,7 @@ class SampleControllerTest extends JsonRpcTestCase
             self::createClient(),
             '/test/',
             [
-                'jsonrpc' => BankiruJsonRpcServerBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'array',
                 'id'      => 'test',
                 'params'  => [

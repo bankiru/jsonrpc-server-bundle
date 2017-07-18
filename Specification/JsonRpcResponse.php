@@ -33,14 +33,14 @@ final class JsonRpcResponse implements JsonRpcResponseInterface
     /** {@inheritdoc} */
     public function getVersion()
     {
-        return BankiruJsonRpcServerBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
     /** {@inheritdoc} */
     public function jsonSerialize()
     {
         $result = [
-            self::VERSION_FIELD => BankiruJsonRpcServerBundle::VERSION,
+            self::VERSION_FIELD => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
             self::ID_FIELD      => $this->getId(),
         ];
 

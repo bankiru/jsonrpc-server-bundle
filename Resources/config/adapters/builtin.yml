@@ -1,0 +1,4 @@
+services:
+  jsonrpc.builtin_adapter.view_listener:
+    class: Bankiru\Api\JsonRpc\Adapters\Builtin\JsonEncodeViewListener
+    public: false

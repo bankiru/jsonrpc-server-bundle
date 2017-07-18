@@ -20,6 +20,6 @@ final class SecurityTest extends JsonRpcTestCase
     {
         $response = $this->sendJsonRpcRequest(new Request('prefix/security/public', []), '/test/');
 
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful(), json_encode($response, JSON_PRETTY_PRINT));
     }
 }
