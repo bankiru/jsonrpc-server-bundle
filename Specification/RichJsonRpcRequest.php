@@ -3,11 +3,11 @@
 namespace Bankiru\Api\JsonRpc\Specification;
 
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
-use Bankiru\Api\Rpc\Http\RequestInterface;
+use Bankiru\Api\Rpc\RpcRequestInterface;
 use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-final class RichJsonRpcRequest implements RequestInterface, JsonRpcRequestInterface
+final class RichJsonRpcRequest implements RpcRequestInterface, JsonRpcRequestInterface
 {
     /** @var  JsonRpcRequestInterface */
     private $request;
