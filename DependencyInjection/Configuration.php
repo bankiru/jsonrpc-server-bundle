@@ -36,7 +36,7 @@ final class Configuration implements ConfigurationInterface
             ->arrayNode('relation_handlers')
             ->fixXmlConfig('relation_handler')
             ->useAttributeAsKey('handler')
-            ->scalarPrototype()
+            ->prototype('scalar')
             ->info(
                 'Key: Relation handler name (i.e. "Relation"), Value: service ID for relation handler entity manager'
             )
