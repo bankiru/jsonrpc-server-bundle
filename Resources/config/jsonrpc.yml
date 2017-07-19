@@ -27,7 +27,7 @@ services:
 
   jsonrpc_server.controller_name_parser:
     class: Bankiru\Api\JsonRpc\Controller\JsonRpcControllerNameParser
-    parent: rpc.controller_name_parser
+    parent: rpc_server.controller_name_parser
 
   jsonrpc_server.exception_listener:
     class: Bankiru\Api\JsonRpc\Listener\ExceptionHandlerListener

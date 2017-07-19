@@ -26,7 +26,7 @@ jsonrpc_server:
       relation_handlers:
         Relation: doctrine.orm.entity_manager
 
-rpc:
+rpc_server:
   router:
     endpoints:
       test:

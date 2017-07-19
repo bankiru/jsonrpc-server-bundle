@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\Rpc\Tests\Fixtures\Impl\Request;
+use Bankiru\Api\Rpc\Test\Impl\Request;
 use ScayTrase\Api\JsonRpc\JsonRpcError;
 
 final class SecurityTest extends JsonRpcTestCase
