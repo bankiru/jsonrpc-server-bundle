@@ -1,3 +1,6 @@
+framework:
+  translator: ~
+
 jms_serializer:
   metadata:
     auto_detection: true

@@ -23,6 +23,7 @@
     <filter>
         <blacklist>
             <directory>Test/</directory>
+            <directory>Tests/</directory>
             <directory>vendor/</directory>
             <directory>build/</directory>
         </blacklist>

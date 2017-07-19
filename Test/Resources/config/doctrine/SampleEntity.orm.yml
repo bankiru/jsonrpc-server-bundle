@@ -1,0 +1,5 @@
+Bankiru\Api\JsonRpc\Test\Entity\SampleEntity:
+  type: entity
+  fields:
+    payload: {type: string}
+    secret: {type: string}
