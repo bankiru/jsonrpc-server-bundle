@@ -5,7 +5,7 @@ namespace Bankiru\Api\JsonRpc\Test\Tests;
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class SampleControllerTest extends JsonRpcTestCase
+final class SampleControllerTest extends JsonRpcTestCase
 {
     public function testBatchRequest()
     {
@@ -57,7 +57,7 @@ class SampleControllerTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content));
-        self::assertTrue(isset($jsonResponse->getBody()[0]->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()[0]->{'sample_payload'});
+        self::assertTrue(isset($jsonResponse->getBody()[0]->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals('my-payload', $jsonResponse->getBody()[0]->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
     }
 }

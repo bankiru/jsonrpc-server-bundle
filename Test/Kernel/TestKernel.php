@@ -1,6 +1,6 @@
 <?php
 
-namespace Bankiru\Api\JsonRpc\Test\Tests\Fixtures;
+namespace Bankiru\Api\JsonRpc\Test\Kernel;
 
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use Bankiru\Api\JsonRpc\Test\JsonRpcTestBundle;
@@ -13,7 +13,7 @@ use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Tests\Fixtures\KernelForTest;
 
-class Kernel extends KernelForTest
+final class TestKernel extends KernelForTest
 {
     public function registerBundles()
     {
@@ -39,17 +39,40 @@ class Kernel extends KernelForTest
 
     public function getCacheDir()
     {
-        return __DIR__ . '/../../../build/cache/';
+        return __DIR__ . '/../../build/' . $this->getName() . '/cache';
     }
 
     public function getLogDir()
     {
-        return __DIR__ . '/../../../build/log/';
+        return __DIR__ . '/../../build/' . $this->getName() . '/log';
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/config.yml');
+
+        if (false !== getenv('JMS_BUNDLE')) {
+            $loader->load(__DIR__ . '/config_jms.yml');
+        }
+
+        if (false !== getenv('DOCTRINE_BUNDLE')) {
+            $loader->load(__DIR__ . '/config_doctrine.yml');
+        }
+    }
+
+    public function getName()
+    {
+        $name = 'jsorpc_test';
+
+        if (false !== getenv('JMS_BUNDLE')) {
+            $name .= '_jms';
+        }
+
+        if (false !== getenv('DOCTRINE_BUNDLE')) {
+            $name .= '_doctrine';
+        }
+
+        return $name;
     }
 
     public function getEnvironment()

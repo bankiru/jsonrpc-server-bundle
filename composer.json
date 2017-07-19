@@ -26,7 +26,7 @@
     "doctrine/doctrine-bundle": "~1.6",
     "doctrine/orm": "~2.3",
     "jms/serializer-bundle": "~1.1",
-    "bankiru/jsonrpc-browser-kit-client": "dev-master"
+    "bankiru/jsonrpc-browser-kit-client": "~1.0"
   },
   "suggest": {
     "doctrine/doctrine-bundle": "For relations handler",

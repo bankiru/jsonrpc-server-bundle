@@ -5,7 +5,7 @@ namespace Bankiru\Api\JsonRpc\Test\Tests;
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class EntityConversionTest extends JsonRpcTestCase
+final class EntityConversionTest extends JsonRpcTestCase
 {
     public function testEntitySerialization()
     {
@@ -58,15 +58,15 @@ class EntityConversionTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'});
+        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
 
         if (static::$kernel->getContainer()->has('jms_serializer')) {
             self::assertTrue(
                 isset($jsonResponse->getBody()->{'private_payload'}),
                 json_encode($content, JSON_PRETTY_PRINT)
             );
-            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'});
+            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'}, json_encode($content, JSON_PRETTY_PRINT));
         }
     }
 
@@ -91,15 +91,15 @@ class EntityConversionTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'});
+        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
 
         if (static::$kernel->getContainer()->has('jms_serializer')) {
             self::assertTrue(
                 isset($jsonResponse->getBody()->{'private_payload'}),
                 json_encode($content, JSON_PRETTY_PRINT)
             );
-            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'});
+            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'}, json_encode($content, JSON_PRETTY_PRINT));
         }
     }
 }

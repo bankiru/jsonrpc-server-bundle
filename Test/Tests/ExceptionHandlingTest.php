@@ -7,7 +7,7 @@ use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class ExceptionHandlingTest extends JsonRpcTestCase
+final class ExceptionHandlingTest extends JsonRpcTestCase
 {
     public function testBatchWithFailingMethod()
     {

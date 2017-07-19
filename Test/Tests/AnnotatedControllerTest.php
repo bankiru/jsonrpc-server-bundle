@@ -5,7 +5,7 @@ namespace Bankiru\Api\JsonRpc\Test\Tests;
 use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class AnnotatedControllerTest extends JsonRpcTestCase
+final class AnnotatedControllerTest extends JsonRpcTestCase
 {
     public function testNestedContext()
     {

@@ -7,7 +7,7 @@ use Bankiru\Api\Rpc\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\RequestContext;
 
-class RouterTest extends WebTestCase
+final class RouterTest extends WebTestCase
 {
     public function testHttpRoutes()
     {

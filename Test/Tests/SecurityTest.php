@@ -9,7 +9,6 @@ final class SecurityTest extends JsonRpcTestCase
 {
     public function testPrivateMethodRequest()
     {
-
         $response = $this->sendJsonRpcRequest(new Request('prefix/security/private', []), '/test/');
 
         self::assertFalse($response->isSuccessful());

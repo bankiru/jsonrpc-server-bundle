@@ -3,7 +3,7 @@
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
 use Bankiru\Api\BrowserKit\JsonRpcClient;
-use Bankiru\Api\JsonRpc\Test\Tests\Fixtures\Kernel;
+use Bankiru\Api\JsonRpc\Test\Kernel\TestKernel;
 use ScayTrase\Api\IdGenerator\UuidGenerator;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\Rpc\RpcRequestInterface;
@@ -14,7 +14,7 @@ abstract class JsonRpcTestCase extends WebTestCase
 {
     protected static function getKernelClass()
     {
-        return Kernel::class;
+        return TestKernel::class;
     }
 
     /**

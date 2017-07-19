@@ -1,0 +1,6 @@
+jms_serializer:
+  metadata:
+    auto_detection: true
+
+jsonrpc_server:
+  view_listener: jsonrpc.jms_adapter.view_listener
