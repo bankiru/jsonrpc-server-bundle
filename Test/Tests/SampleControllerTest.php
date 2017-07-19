@@ -57,7 +57,14 @@ final class SampleControllerTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content));
-        self::assertTrue(isset($jsonResponse->getBody()[0]->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertEquals('my-payload', $jsonResponse->getBody()[0]->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
+        self::assertTrue(
+            isset($jsonResponse->getBody()[0]->{'sample_payload'}),
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()[0]->{'sample_payload'},
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
     }
 }

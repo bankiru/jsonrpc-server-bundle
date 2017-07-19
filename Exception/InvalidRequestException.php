@@ -21,4 +21,12 @@ class InvalidRequestException extends JsonRpcException
             sprintf('Invalid JSONRPC 2.0 Request. Version mismatch: %s expected, %s given', $expected, $actual)
         );
     }
+
+    public static function notAJsonRpc()
+    {
+        return self::create(
+            JsonRpcError::INVALID_REQUEST,
+            'Not a JSONRPC 2.0 Request'
+        );
+    }
 }

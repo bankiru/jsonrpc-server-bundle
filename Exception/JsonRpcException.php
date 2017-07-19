@@ -18,7 +18,6 @@ class JsonRpcException extends \Exception implements JsonRpcExceptionInterface
         parent::__construct($message, $code, $previous);
     }
 
-
     /**
      * @return JsonRpcErrorInterface
      */

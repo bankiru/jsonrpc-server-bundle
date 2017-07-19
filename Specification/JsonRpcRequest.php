@@ -39,7 +39,10 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
         }
 
         if (BankiruJsonRpcServerBundle::JSONRPC_VERSION !== $source->jsonrpc) {
-            throw InvalidRequestException::invalidVersion(BankiruJsonRpcServerBundle::JSONRPC_VERSION, $source->jsonrpc);
+            throw InvalidRequestException::invalidVersion(
+                BankiruJsonRpcServerBundle::JSONRPC_VERSION,
+                $source->jsonrpc
+            );
         }
 
         $request->id         = isset($source->id) ? $source->id : null;

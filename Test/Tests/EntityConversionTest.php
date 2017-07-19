@@ -59,14 +59,22 @@ final class EntityConversionTest extends JsonRpcTestCase
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
         self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()->{'sample_payload'},
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
 
         if (static::$kernel->getContainer()->has('jms_serializer')) {
             self::assertTrue(
                 isset($jsonResponse->getBody()->{'private_payload'}),
                 json_encode($content, JSON_PRETTY_PRINT)
             );
-            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'}, json_encode($content, JSON_PRETTY_PRINT));
+            self::assertEquals(
+                'secret-payload',
+                $jsonResponse->getBody()->{'private_payload'},
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
         }
     }
 
@@ -92,14 +100,22 @@ final class EntityConversionTest extends JsonRpcTestCase
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
         self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'}, json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()->{'sample_payload'},
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
 
         if (static::$kernel->getContainer()->has('jms_serializer')) {
             self::assertTrue(
                 isset($jsonResponse->getBody()->{'private_payload'}),
                 json_encode($content, JSON_PRETTY_PRINT)
             );
-            self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'}, json_encode($content, JSON_PRETTY_PRINT));
+            self::assertEquals(
+                'secret-payload',
+                $jsonResponse->getBody()->{'private_payload'},
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
         }
     }
 }

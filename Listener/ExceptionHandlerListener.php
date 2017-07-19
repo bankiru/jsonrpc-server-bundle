@@ -13,15 +13,17 @@ use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 
 final class ExceptionHandlerListener
 {
-    private $debug = false;
+    private $debug;
 
     /**
      * ExceptionHandlerListener constructor.
      *
      * @param bool $debug
      */
-    public function __construct($debug) { $this->debug = (bool)$debug; }
-
+    public function __construct($debug = false)
+    {
+        $this->debug = (bool)$debug;
+    }
 
     public function onJsonRpcException(GetExceptionResponseEvent $event)
     {
@@ -37,13 +39,15 @@ final class ExceptionHandlerListener
                 JsonRpcException::create(
                     JsonRpcError::INVALID_PARAMS,
                     $exception->getMessage(),
-                    $exception->getTrace());
+                    $exception->getTrace()
+                );
         } elseif ($exception instanceof MethodNotFoundException) {
             $exception =
                 JsonRpcException::create(
                     JsonRpcError::METHOD_NOT_FOUND,
                     $exception->getMessage(),
-                    $exception->getTrace());
+                    $exception->getTrace()
+                );
         }
 
         if ($exception instanceof JsonRpcExceptionInterface) {
