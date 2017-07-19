@@ -33,7 +33,7 @@ final class AnnotatedControllerTest extends JsonRpcTestCase
 
     /**
      * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     * @expectedExceptionMessage Not an valid JSON request
+     * @expectedExceptionMessage Not a valid JSON-RPC request
      */
     public function testEmptyRequest()
     {
