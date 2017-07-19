@@ -221,7 +221,7 @@ final class JsonRpcControllerTest extends TestCase
         $evm->dispatch(Argument::exact(RpcEvents::RESPONSE), Argument::type(FilterResponseEvent::class))
             ->willReturn(null);
 
-        $mock->get(Argument::exact('jsonrpc.controller_resolver'))->willReturn($resolver->reveal());
+        $mock->get(Argument::exact('jsonrpc_server.controller_resolver'))->willReturn($resolver->reveal());
         $mock->get(Argument::exact('event_dispatcher'))->willReturn($evm->reveal());
         $mock->get(Argument::exact('kernel'))->willReturn($kernel->reveal());
 

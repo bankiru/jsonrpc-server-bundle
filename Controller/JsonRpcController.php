@@ -64,7 +64,7 @@ final class JsonRpcController extends RpcController
      */
     protected function getResolver()
     {
-        return $this->get('jsonrpc.controller_resolver');
+        return $this->get('jsonrpc_server.controller_resolver');
     }
 
     /**

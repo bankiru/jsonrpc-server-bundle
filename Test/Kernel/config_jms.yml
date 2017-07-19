@@ -6,4 +6,4 @@ jms_serializer:
     auto_detection: true
 
 jsonrpc_server:
-  view_listener: jsonrpc.jms_adapter.view_listener
+  view_listener: jsonrpc_server.jms_adapter.view_listener

@@ -1,5 +1,5 @@
 services:
-  jsonrpc.jms_adapter.view_listener:
+  jsonrpc_server.jms_adapter.view_listener:
     class: Bankiru\Api\JsonRpc\Adapters\JMS\SerializedJsonRpcResponseListener
     arguments:
     - "@jms_serializer"

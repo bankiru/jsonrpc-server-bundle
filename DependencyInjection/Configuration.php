@@ -17,7 +17,7 @@ final class Configuration implements ConfigurationInterface
         $root->children()
              ->scalarNode('view_listener')
              ->info('View listener service ID')
-             ->defaultValue('jsonrpc.builtin_adapter.view_listener');
+             ->defaultValue('jsonrpc_server.builtin_adapter.view_listener');
 
         $adapters = $root->children()->arrayNode('adapters');
         $this->configureJms($adapters);

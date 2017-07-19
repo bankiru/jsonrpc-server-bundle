@@ -65,7 +65,7 @@ Configuration reference:
 jsonrpc_server:
 
     # View listener service ID
-    view_listener:        jsonrpc.builtin_adapter.view_listener
+    view_listener:        jsonrpc_server.builtin_adapter.view_listener
     adapters:
         jms:
             relation_handlers:

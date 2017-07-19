@@ -1,42 +1,42 @@
 parameters:
-  jsonrpc.debug: false
+  jsonrpc_server.debug: false
 
 services:
-  jsonrpc.controller_resolver:
+  jsonrpc_server.controller_resolver:
     class: Bankiru\Api\Rpc\Routing\ControllerResolver\ControllerResolver
     arguments:
     - "@service_container"
-    - "@jsonrpc.controller_name_parser"
+    - "@jsonrpc_server.controller_name_parser"
     - "@?logger"
 
-  jsonrpc.view.notification_response:
+  jsonrpc_server.view.notification_response:
     class: Bankiru\Api\JsonRpc\Listener\NotificationResponseListener
     tags:
     - { name: kernel.event_listener, event: rpc.view, method: onNullResponse, priority: -255 }
 
-  jsonrpc.view.notification_filter:
+  jsonrpc_server.view.notification_filter:
     class: Bankiru\Api\JsonRpc\Listener\NotificationFilter
     tags:
     - { name: kernel.event_listener, event: rpc.response, method: filterNotificationResponse, priority: -255 }
 
 
-  jsonrpc.reponse_listener.match_id:
+  jsonrpc_server.reponse_listener.match_id:
     class: Bankiru\Api\JsonRpc\Listener\IdMatcherListener
     tags:
     - { name: kernel.event_listener, event: rpc.response, method: onFilterResponse, priority: -254 }
 
-  jsonrpc.controller_name_parser:
+  jsonrpc_server.controller_name_parser:
     class: Bankiru\Api\JsonRpc\Controller\JsonRpcControllerNameParser
     parent: rpc.controller_name_parser
 
-  jsonrpc.exception_listener:
+  jsonrpc_server.exception_listener:
     class: Bankiru\Api\JsonRpc\Listener\ExceptionHandlerListener
     arguments:
-    - "%jsonrpc.debug%"
+    - "%jsonrpc_server.debug%"
     tags:
     - { name: kernel.event_listener, event: rpc.exception, method: onJsonRpcException }
 
-  jsonrpc.http_exception_listener:
+  jsonrpc_server.http_exception_listener:
     class: Bankiru\Api\JsonRpc\Listener\HttpExceptionListener
     tags:
     - { name: kernel.event_listener, event: kernel.exception, method: onJsonRpcException }

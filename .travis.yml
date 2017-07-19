@@ -16,7 +16,7 @@ cache:
     - $HOME/.composer/cache
 
 env:
-  - PACKAGES='symfony/symfony=~3.4@dev'
+  - PACKAGES='symfony/symfony=~3.4' STABILITY=dev
   - PACKAGES='symfony/symfony=3.3.*'
   - PACKAGES='symfony/symfony=3.2.*'
   - PACKAGES='symfony/symfony=2.8.*'
@@ -26,13 +26,13 @@ matrix:
   fast_finish: true
   include:
     - php: 7.1
-      env: PACKAGES='symfony/symfony=~4.0@dev' STABILITY=dev
+      env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
     - php: nightly
-      env: PACKAGES='symfony/symfony=~4.0@dev' STABILITY=dev
+      env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
 
   allow_failures:
     - php: nightly
-    - env: PACKAGES='symfony/symfony=~4.0@dev' STABILITY=dev
+    - env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
 
 before_install:
   - travis_retry composer self-update
