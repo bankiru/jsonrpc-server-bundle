@@ -24,18 +24,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 final class JsonRpcControllerTest extends TestCase
 {
-    public function testEmptyBatchRequestHandling()
-    {
-        $controller = $this->createController();
-
-        $request  = $this->createJsonRequest('/', []);
-        $response = $controller->jsonRpcAction($request);
-
-        self::assertInstanceOf(JsonRpcHttpResponse::class, $response);
-        self::assertTrue($response->isSuccessful());
-        self::assertEquals('[]', $response->getContent());
-    }
-
     public function getInvalidJsonRequests()
     {
         return [
@@ -85,7 +73,8 @@ final class JsonRpcControllerTest extends TestCase
     public function getValidResponseAndRequests()
     {
         return [
-            'single' => [
+            'empty batch' => [[], '[]'],
+            'single'      => [
                 [
                     'jsonrpc' => '2.0',
                     'id'      => 'test',
@@ -93,7 +82,7 @@ final class JsonRpcControllerTest extends TestCase
                 ],
                 '{"jsonrpc":"2.0","id":"test","result":{"success":true}}',
             ],
-            'batch'  => [
+            'batch'       => [
                 [
                     [
                         'jsonrpc' => '2.0',
@@ -121,6 +110,7 @@ final class JsonRpcControllerTest extends TestCase
         );
         $response   = $controller->jsonRpcAction($request);
 
+        self::assertInstanceOf(JsonRpcHttpResponse::class, $response);
         self::assertTrue($response->isSuccessful());
         self::assertEquals($responseBody, $response->getContent());
     }
