@@ -165,6 +165,12 @@ final class JsonRpcControllerTest extends TestCase
         );
     }
 
+    /**
+     * @param string $uri
+     * @param mixed  $content
+     *
+     * @return Request
+     */
     private function createJsonRequest($uri, $content)
     {
         return Request::create($uri, 'POST', [], [], [], [], json_encode($content));

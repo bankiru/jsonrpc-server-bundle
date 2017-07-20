@@ -23,7 +23,7 @@ final class RouterTest extends WebTestCase
     {
         $client = self::createClient();
 
-        foreach (['test', 'test_private'] as $endpoint) /** @var MethodCollection $collection */ {
+        foreach (['test', 'test_private'] as $endpoint) {
             /** @var Router $router */
             $router = $client->getContainer()->get('rpc_server.endpoint_router.' . $endpoint);
             self::assertNotNull($router);

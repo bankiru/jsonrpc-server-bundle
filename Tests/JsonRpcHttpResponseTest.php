@@ -24,7 +24,7 @@ final class JsonRpcHttpResponseTest extends TestCase
             'empty array'    => [[]],
             'single success' => [clone $success],
             'single failure' => [clone $error],
-            'mixed array'    => [[clone $success, clone $error,]],
+            'mixed array'    => [[clone $success, clone $error]],
         ];
     }
 

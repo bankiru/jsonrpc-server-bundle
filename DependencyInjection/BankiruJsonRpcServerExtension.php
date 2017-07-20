@@ -2,7 +2,6 @@
 
 namespace Bankiru\Api\JsonRpc\DependencyInjection;
 
-use Bankiru\Api\JsonRpc\Adapters\JMS\Compiler\JmsDriverPass;
 use Bankiru\Api\JsonRpc\Adapters\JMS\Compiler\RelationHandlerHelper;
 use Bankiru\Api\Rpc\RpcEvents;
 use JMS\SerializerBundle\JMSSerializerBundle;
