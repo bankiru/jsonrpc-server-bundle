@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 final class RelationHandlerHelper
 {
-    public static function ConfigureRelationHandler(ContainerBuilder $builder, $handler, $emid)
+    public static function configureRelationHandler(ContainerBuilder $builder, $handler, $emid)
     {
         if (!$builder->has($emid)) {
             return;

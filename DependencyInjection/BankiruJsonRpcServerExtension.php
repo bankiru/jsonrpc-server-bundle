@@ -68,7 +68,7 @@ final class BankiruJsonRpcServerExtension extends Extension
         $loader->load('jms.yml');
 
         foreach ((array)$config['adapters']['jms']['relation_handlers'] as $handler => $emid) {
-            RelationHandlerHelper::ConfigureRelationHandler($container, $handler, $emid);
+            RelationHandlerHelper::configureRelationHandler($container, $handler, $emid);
         }
     }
 
