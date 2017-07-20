@@ -21,8 +21,8 @@ final class BankiruJsonRpcServerExtension extends Extension
 
         $config = $this->processConfiguration(new Configuration(), $configs);
 
-        $this->configureSecurity($container, $config);
-        $this->configureBuiltinAdapter($container, $config);
+        $this->configureSecurity($container);
+        $this->configureBuiltinAdapter($container);
         $this->configureJmsAdapter($container, $config);
 
         if (!empty($config['view_listener'])) {
@@ -47,7 +47,7 @@ final class BankiruJsonRpcServerExtension extends Extension
     /**
      * @param ContainerBuilder $container
      */
-    private function configureBuiltinAdapter(ContainerBuilder $container, array $config)
+    private function configureBuiltinAdapter(ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config/adapters'));
 
@@ -56,6 +56,7 @@ final class BankiruJsonRpcServerExtension extends Extension
 
     /**
      * @param ContainerBuilder $container
+     * @param array            $config
      */
     private function configureJmsAdapter(ContainerBuilder $container, array $config)
     {
@@ -66,7 +67,7 @@ final class BankiruJsonRpcServerExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config/adapters'));
         $loader->load('jms.yml');
 
-        foreach ($config['adapters']['jms']['relation_handlers'] as $handler => $emid) {
+        foreach ((array)$config['adapters']['jms']['relation_handlers'] as $handler => $emid) {
             RelationHandlerHelper::ConfigureRelationHandler($container, $handler, $emid);
         }
     }
@@ -74,7 +75,7 @@ final class BankiruJsonRpcServerExtension extends Extension
     /**
      * @param ContainerBuilder $container
      */
-    private function configureSecurity(ContainerBuilder $container, array $config)
+    private function configureSecurity(ContainerBuilder $container)
     {
         if (in_array(SecurityBundle::class, $container->getParameter('kernel.bundles'), true)) {
             $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));

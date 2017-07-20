@@ -82,40 +82,47 @@ final class JsonRpcControllerTest extends TestCase
         $controller->jsonRpcAction($request);
     }
 
-    public function testSingleRequestHandling()
+    public function getValidResponseAndRequests()
     {
-        $controller = $this->createController();
-        $request    = $this->createJsonRequest(
-            '/',
-            [
-                'jsonrpc' => '2.0',
-                'id'      => 'test',
-                'method'  => 'test',
-            ]
-        );
-        $response   = $controller->jsonRpcAction($request);
-
-        self::assertTrue($response->isSuccessful());
-        self::assertEquals('{"jsonrpc":"2.0","id":"test","result":{"success":true}}', $response->getContent());
-    }
-
-    public function testBatchRequestHandling()
-    {
-        $controller = $this->createController();
-        $request    = $this->createJsonRequest(
-            '/',
-            [
+        return [
+            'single' => [
                 [
                     'jsonrpc' => '2.0',
                     'id'      => 'test',
                     'method'  => 'test',
                 ],
-            ]
+                '{"jsonrpc":"2.0","id":"test","result":{"success":true}}',
+            ],
+            'batch'  => [
+                [
+                    [
+                        'jsonrpc' => '2.0',
+                        'id'      => 'test',
+                        'method'  => 'test',
+                    ],
+                ],
+                '[{"jsonrpc":"2.0","id":"test","result":{"success":true}}]',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider getValidResponseAndRequests
+     *
+     * @param array  $content
+     * @param string $responseBody
+     */
+    public function testValidRequestHandling($content, $responseBody)
+    {
+        $controller = $this->createController();
+        $request    = $this->createJsonRequest(
+            '/',
+            $content
         );
         $response   = $controller->jsonRpcAction($request);
 
         self::assertTrue($response->isSuccessful());
-        self::assertEquals('[{"jsonrpc":"2.0","id":"test","result":{"success":true}}]', $response->getContent());
+        self::assertEquals($responseBody, $response->getContent());
     }
 
     public function testExceptionHandling()
@@ -187,7 +194,7 @@ final class JsonRpcControllerTest extends TestCase
                     throw new \LogicException('Failure!');
                 }
 
-                return new JsonRpcResponse($request->getId(), ['success' => true]);
+                return new JsonRpcResponse($request->getId(), (object)['success' => true]);
             }
         );
         $resolver->getArguments(Argument::type(RpcRequestInterface::class), Argument::any())->will(
