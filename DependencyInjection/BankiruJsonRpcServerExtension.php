@@ -2,7 +2,6 @@
 
 namespace Bankiru\Api\JsonRpc\DependencyInjection;
 
-use Bankiru\Api\JsonRpc\Adapters\JMS\Compiler\RelationHandlerHelper;
 use Bankiru\Api\Rpc\RpcEvents;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -67,9 +66,7 @@ final class BankiruJsonRpcServerExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config/adapters'));
         $loader->load('jms.yml');
 
-        foreach ((array)$config['adapters']['jms']['relation_handlers'] as $handler => $emid) {
-            RelationHandlerHelper::configureRelationHandler($container, $handler, $emid);
-        }
+        $container->setParameter('jsonrpc_server.handlers', (array)$config['adapters']['jms']['relation_handlers']);
     }
 
     /**
