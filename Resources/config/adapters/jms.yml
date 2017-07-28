@@ -1,3 +1,6 @@
+parameters:
+  jsonrpc_server.jms.handlers: []
+
 services:
   jsonrpc_server.jms_adapter.view_listener:
     class: Bankiru\Api\JsonRpc\Adapters\JMS\SerializedJsonRpcResponseListener

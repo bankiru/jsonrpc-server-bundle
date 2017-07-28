@@ -12,7 +12,11 @@ final class RelationHandlerPass implements CompilerPassInterface
     /** {@inheritdoc} */
     public function process(ContainerBuilder $container)
     {
-        foreach ($container->getParameter('jsonrpc_server.handlers') as $handler => $emid) {
+        if (!$container->hasParameter('jsonrpc_server.jms.handlers')) {
+            return;
+        }
+
+        foreach ($container->getParameter('jsonrpc_server.jms.handlers') as $handler => $emid) {
             $this->configureRelationHandler($container, $handler, $emid);
         }
     }

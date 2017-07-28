@@ -66,7 +66,11 @@ final class BankiruJsonRpcServerExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config/adapters'));
         $loader->load('jms.yml');
 
-        $container->setParameter('jsonrpc_server.handlers', (array)$config['adapters']['jms']['relation_handlers']);
+        if (!$this->isConfigEnabled($container, $config['adapters']['jms'])) {
+            return;
+        }
+
+        $container->setParameter('jsonrpc_server.jms.handlers', (array)$config['adapters']['jms']['relation_handlers']);
     }
 
     /**

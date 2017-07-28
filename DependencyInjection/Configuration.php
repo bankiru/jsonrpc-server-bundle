@@ -32,6 +32,8 @@ final class Configuration implements ConfigurationInterface
     {
         $jms = $adapters->children()->arrayNode('jms');
 
+        $jms->canBeEnabled();
+
         $jms->children()
             ->arrayNode('relation_handlers')
             ->fixXmlConfig('relation_handler')
