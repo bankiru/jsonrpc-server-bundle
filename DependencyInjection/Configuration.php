@@ -14,10 +14,16 @@ final class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder();
         $root    = $builder->root('jsonrpc_server');
 
-        $root->children()
-             ->scalarNode('view_listener')
-             ->info('View listener service ID')
-             ->defaultValue('jsonrpc_server.builtin_adapter.view_listener');
+        $viewListener = $root
+            ->children()
+            ->arrayNode('view_listener')
+            ->canBeEnabled();
+
+        $viewListener
+            ->children()
+            ->scalarNode('normalizer')
+            ->info('View listener normalizer service ID')
+            ->defaultValue('jsonrpc_server.builtin_adapter.normalizer');
 
         $adapters = $root->children()->arrayNode('adapters');
         $this->configureJms($adapters);

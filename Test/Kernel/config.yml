@@ -21,6 +21,8 @@ security:
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
 jsonrpc_server:
+  view_listener:
+    enabled: true
   adapters:
     jms:
       relation_handlers:

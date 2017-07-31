@@ -1,4 +1,4 @@
 services:
-  jsonrpc_server.builtin_adapter.view_listener:
-    class: Bankiru\Api\JsonRpc\Adapters\Builtin\JsonEncodeViewListener
+  jsonrpc_server.builtin_adapter.normalizer:
+    class: Bankiru\Api\JsonRpc\Adapters\Builtin\BuiltinNormalizerAdapter
     public: false

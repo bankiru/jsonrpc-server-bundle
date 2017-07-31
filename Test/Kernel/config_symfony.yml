@@ -1,0 +1,6 @@
+framework:
+  serializer: ~
+
+jsonrpc_server:
+  view_listener:
+    normalizer: jsonrpc_server.symfony_adapter.normalizer

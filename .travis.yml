@@ -48,4 +48,6 @@ script:
   - vendor/bin/phpunit --colors -c phpunit.xml --testsuite unit
   - vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
   - JMS_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - SYMFONY_SERIALIZER=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
   - JMS_BUNDLE=1 DOCTRINE_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - SYMFONY_SERIALIZER=1 DOCTRINE_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration

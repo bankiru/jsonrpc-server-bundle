@@ -55,6 +55,10 @@ final class TestKernel extends KernelForTest
             $loader->load(__DIR__ . '/config_jms.yml');
         }
 
+        if (false !== getenv('SYMFONY_SERIALIZER')) {
+            $loader->load(__DIR__ . '/config_symfony.yml');
+        }
+
         if (false !== getenv('DOCTRINE_BUNDLE')) {
             $loader->load(__DIR__ . '/config_doctrine.yml');
         }
@@ -66,6 +70,10 @@ final class TestKernel extends KernelForTest
 
         if (false !== getenv('JMS_BUNDLE')) {
             $name .= '_jms';
+        }
+
+        if (false !== getenv('SYMFONY_SERIALIZER')) {
+            $name .= '_symfony';
         }
 
         if (false !== getenv('DOCTRINE_BUNDLE')) {

@@ -1,0 +1,5 @@
+services:
+  jsonrpc_server.symfony_adapter.normalizer:
+    class: Bankiru\Api\JsonRpc\Adapters\Symfony\SymfonyNormalizerAdapter
+    arguments:
+    - "@serializer"
