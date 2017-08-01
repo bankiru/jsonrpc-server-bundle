@@ -20,7 +20,7 @@ services:
     - { name: kernel.event_listener, event: rpc.response, method: filterNotificationResponse, priority: -255 }
 
 
-  jsonrpc_server.reponse_listener.match_id:
+  jsonrpc_server.response_listener.match_id:
     class: Bankiru\Api\JsonRpc\Listener\IdMatcherListener
     tags:
     - { name: kernel.event_listener, event: rpc.response, method: onFilterResponse, priority: -254 }
