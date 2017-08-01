@@ -17,7 +17,7 @@ final class Configuration implements ConfigurationInterface
         $viewListener = $root
             ->children()
             ->arrayNode('view_listener')
-            ->canBeEnabled();
+            ->canBeDisabled();
 
         $viewListener
             ->children()
@@ -25,7 +25,7 @@ final class Configuration implements ConfigurationInterface
             ->info('View listener normalizer service ID')
             ->defaultValue('jsonrpc_server.builtin_adapter.normalizer');
 
-        $adapters = $root->children()->arrayNode('adapters');
+        $adapters = $root->children()->arrayNode('adapters')->addDefaultsIfNotSet();
         $this->configureJms($adapters);
 
         return $builder;
