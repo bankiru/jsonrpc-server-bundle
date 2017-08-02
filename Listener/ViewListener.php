@@ -40,13 +40,12 @@ final class ViewListener
             return;
         }
 
-        $response = new JsonRpcResponse(
-            $request->getId(),
-            $this->normalizer->normalize(
-                $event->getResponse(),
-                $request->getAttributes()->get('_context')
-            )
-        );
+        $content = $event->getResponse();
+        if (!is_scalar($content) && null !== $content) {
+            $content = $this->normalizer->normalize($content, $request->getAttributes()->get('_context'));
+        }
+
+        $response = new JsonRpcResponse($request->getId(), $content);
 
         $event->setResponse($response);
     }
