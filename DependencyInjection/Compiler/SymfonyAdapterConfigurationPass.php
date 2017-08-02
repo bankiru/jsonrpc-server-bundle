@@ -39,7 +39,9 @@ final class SymfonyAdapterConfigurationPass implements CompilerPassInterface
      */
     private function hasSymfonySerializer(ContainerBuilder $container)
     {
-        $interfaces = class_implements($container->getDefinition('serializer')->getClass());
+        $interfaces = class_implements(
+            $container->getParameterBag()->resolveValue($container->getDefinition('serializer')->getClass())
+        );
 
         return in_array(NormalizerInterface::class, $interfaces, true);
     }
