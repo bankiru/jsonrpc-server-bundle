@@ -46,5 +46,4 @@ final class NormalizingListener
 
         $event->setResponse($content);
     }
-
 }
