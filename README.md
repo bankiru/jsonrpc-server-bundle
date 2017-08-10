@@ -64,8 +64,8 @@ Configuration reference:
 ```yaml
 jsonrpc_server:
 
-    # View listener service ID
-    view_listener:        jsonrpc_server.builtin_adapter.view_listener
+    # Normalizer listener service ID
+    normalizer_listener:        jsonrpc_server.builtin_adapter.view_listener
     adapters:
         jms:
             relation_handlers:

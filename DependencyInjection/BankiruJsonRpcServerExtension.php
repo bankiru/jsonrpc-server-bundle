@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\DependencyInjection;
 
-use Bankiru\Api\JsonRpc\Listener\ViewListener;
+use Bankiru\Api\JsonRpc\Listener\NormalizingListener;
 use Bankiru\Api\Rpc\RpcEvents;
 use JMS\SerializerBundle\JMSSerializerBundle;
 use Symfony\Bundle\SecurityBundle\SecurityBundle;
@@ -26,16 +26,16 @@ final class BankiruJsonRpcServerExtension extends Extension
         $this->configureBuiltinAdapter($container);
         $this->configureJmsAdapter($container, $config);
 
-        if ($this->isConfigEnabled($container, $config['view_listener'])) {
-            $container->register('jsonrpc_server.response_listener.normalizer', ViewListener::class)
+        if ($this->isConfigEnabled($container, $config['normalizer_listener'])) {
+            $container->register('jsonrpc_server.response_listener.normalizer', NormalizingListener::class)
                       ->setPublic(true)
-                      ->setArguments([new Reference($config['view_listener']['normalizer'])])
+                      ->setArguments([new Reference($config['normalizer_listener']['normalizer'])])
                       ->addTag(
                           'kernel.event_listener',
                           [
                               'event'    => RpcEvents::VIEW,
                               'method'   => 'onPlainResponse',
-                              'priority' => -254,
+                              'priority' => 255,
                           ]
                       );
         }

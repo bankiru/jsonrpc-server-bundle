@@ -6,5 +6,5 @@ jms_serializer:
     auto_detection: true
 
 jsonrpc_server:
-  view_listener:
+  normalizer_listener:
     normalizer: jsonrpc_server.jms_adapter.normalizer

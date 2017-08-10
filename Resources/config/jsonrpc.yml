@@ -19,6 +19,10 @@ services:
     tags:
     - { name: kernel.event_listener, event: rpc.response, method: filterNotificationResponse, priority: -255 }
 
+  jsonrpc_server.plain_view_listener:
+    class: Bankiru\Api\JsonRpc\Listener\ViewListener
+    tags:
+    - { name: kernel.event_listener, event: rpc.view, method: onPlainResponse, priority: -255 }
 
   jsonrpc_server.response_listener.match_id:
     class: Bankiru\Api\JsonRpc\Listener\IdMatcherListener

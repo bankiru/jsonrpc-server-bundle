@@ -14,12 +14,12 @@ final class Configuration implements ConfigurationInterface
         $builder = new TreeBuilder();
         $root    = $builder->root('jsonrpc_server');
 
-        $viewListener = $root
+        $normListener = $root
             ->children()
-            ->arrayNode('view_listener')
+            ->arrayNode('normalizer_listener')
             ->canBeDisabled();
 
-        $viewListener
+        $normListener
             ->children()
             ->scalarNode('normalizer')
             ->info('View listener normalizer service ID')

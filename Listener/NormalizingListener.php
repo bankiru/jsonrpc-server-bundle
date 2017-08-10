@@ -2,13 +2,28 @@
 
 namespace Bankiru\Api\JsonRpc\Listener;
 
-use Bankiru\Api\JsonRpc\Specification\JsonRpcResponse;
+use Bankiru\Api\JsonRpc\NormalizerInterface;
 use Bankiru\Api\JsonRpc\Specification\RichJsonRpcRequest;
 use Bankiru\Api\Rpc\Event\ViewEvent;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 
-final class ViewListener
+final class NormalizingListener
 {
+    /**
+     * @var NormalizerInterface
+     */
+    private $normalizer;
+
+    /**
+     * ViewListener constructor.
+     *
+     * @param NormalizerInterface $normalizer
+     */
+    public function __construct(NormalizerInterface $normalizer)
+    {
+        $this->normalizer = $normalizer;
+    }
+
     public function onPlainResponse(ViewEvent $event)
     {
         $request  = $event->getRequest();
@@ -24,8 +39,12 @@ final class ViewListener
             return;
         }
 
-        $response = new JsonRpcResponse($request->getId(), $response);
+        $content = $event->getResponse();
+        if (!is_scalar($content) && null !== $content) {
+            $content = $this->normalizer->normalize($content, $request->getAttributes()->get('_context'));
+        }
 
-        $event->setResponse($response);
+        $event->setResponse($content);
     }
+
 }
