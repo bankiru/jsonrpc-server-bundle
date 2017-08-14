@@ -2,30 +2,29 @@
 
 namespace Bankiru\Api\JsonRpc\Adapters\JMS;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use JMS\Serializer\Context;
 use JMS\Serializer\JsonDeserializationVisitor;
 use JMS\Serializer\JsonSerializationVisitor;
 
 final class RelationsHandler
 {
     /**
-     * @var EntityManagerInterface
+     * @var ObjectManager
      */
     private $manager;
 
     /**
      * RelationsHandler constructor.
      *
-     * @param EntityManagerInterface $manager
+     * @param ObjectManager $manager
      */
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(ObjectManager $manager)
     {
         $this->manager = $manager;
     }
 
-    public function serializeRelation(JsonSerializationVisitor $visitor, $relation, array $type, Context $context)
+    public function serializeRelation(JsonSerializationVisitor $visitor, $relation)
     {
         if ($relation instanceof \Traversable) {
             $relation = iterator_to_array($relation);
@@ -38,7 +37,7 @@ final class RelationsHandler
         return $this->getSingleEntityRelation($relation);
     }
 
-    public function deserializeRelation(JsonDeserializationVisitor $visitor, $relation, array $type, Context $context)
+    public function deserializeRelation(JsonDeserializationVisitor $visitor, $relation, array $type)
     {
         $className = isset($type['params'][0]['name']) ? $type['params'][0]['name'] : null;
 
@@ -50,7 +49,7 @@ final class RelationsHandler
         $metadata = $this->manager->getClassMetadata($className);
 
         if (!is_array($relation)) {
-            return $this->manager->getReference($className, $relation);
+            return $this->deserializeIdentifier($className, $relation);
         }
 
         $single = false;
@@ -62,12 +61,12 @@ final class RelationsHandler
         }
 
         if ($single) {
-            return $this->manager->getReference($className, $relation);
+            return $this->deserializeIdentifier($className, $relation);
         }
 
         $objects = [];
         foreach ($relation as $idSet) {
-            $objects[] = $this->manager->getReference($className, $idSet);
+            $objects[] = $this->deserializeIdentifier($className, $idSet);
         }
 
         return $objects;
@@ -83,10 +82,25 @@ final class RelationsHandler
         $metadata = $this->manager->getClassMetadata(get_class($relation));
 
         $ids = $metadata->getIdentifierValues($relation);
-        if (!$metadata->isIdentifierComposite) {
+        if (1 === count($metadata->getIdentifierFieldNames())) {
             $ids = array_shift($ids);
         }
 
         return $ids;
+    }
+
+    /**
+     * @param string $className
+     * @param mixed  $identifier
+     *
+     * @return object
+     */
+    private function deserializeIdentifier($className, $identifier)
+    {
+        if (method_exists($this->manager, 'getReference')) {
+            return $this->manager->getReference($className, $identifier);
+        }
+
+        return $this->manager->find($className, $identifier);
     }
 }
