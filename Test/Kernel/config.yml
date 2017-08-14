@@ -1,0 +1,47 @@
+framework:
+    test: ~
+    secret:       test
+    router:
+        resource: "%kernel.root_dir%/routing.yml"
+
+services:
+  logger:
+    class: Psr\Log\NullLogger
+
+security:
+  providers:
+    in_memory:
+      memory: ~
+
+  firewalls:
+    main:
+      anonymous: ~
+
+  access_control:
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+jsonrpc_server:
+  normalizer_listener:
+    enabled: true
+  adapters:
+    jms:
+      relation_handlers:
+        Relation: doctrine.orm.entity_manager
+
+rpc_server:
+  router:
+    endpoints:
+      test:
+        path: /test/
+        resources: '@JsonRpcTestBundle/Resources/config/jsonrpc_routes.yml'
+        defaults:
+          _controller : BankiruJsonRpcServerBundle:JsonRpc:jsonRpc
+          _format: json
+      test_private:
+        path: /test/private/
+        defaults:
+          _controller : BankiruJsonRpcServerBundle:JsonRpc:jsonRpc
+          _format: json
+        resources:
+          - '@JsonRpcTestBundle/Resources/config/jsonrpc_routes.yml'
+          - '@JsonRpcTestBundle/Resources/config/jsonrpc_private.yml'

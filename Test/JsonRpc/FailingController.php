@@ -2,7 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Test\JsonRpc;
 
-class FailingController
+final class FailingController
 {
     public function failureAction()
     {

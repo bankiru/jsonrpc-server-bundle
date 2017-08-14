@@ -1,0 +1,19 @@
+Bankiru\Api\JsonRpc\Test\Entity\SampleEntity:
+  exclusion_policy: ALL
+  properties:
+    id:
+      type: integer
+      serialized_name: id
+      expose: true
+
+    payload:
+      type: string
+      serialized_name: sample_payload
+      expose: true
+
+    secret:
+      type: string
+      serialized_name: private_payload
+      groups: [private]
+      since_version: 0.1
+      expose: true

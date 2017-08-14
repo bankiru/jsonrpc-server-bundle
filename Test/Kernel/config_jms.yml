@@ -1,0 +1,10 @@
+framework:
+  translator: ~
+
+jms_serializer:
+  metadata:
+    auto_detection: true
+
+jsonrpc_server:
+  normalizer_listener:
+    normalizer: jsonrpc_server.jms_adapter.normalizer

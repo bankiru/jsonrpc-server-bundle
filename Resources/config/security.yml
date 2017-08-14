@@ -1,0 +1,5 @@
+services:
+  jsonrpc_server.security.exception_listener:
+    class: Bankiru\Api\JsonRpc\Listener\AccessDeniedExceptionListener
+    tags:
+    - { name: kernel.event_listener, event: rpc.exception, method: onRpcException, priority: 255 }

@@ -2,10 +2,10 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class EntityConversionTest extends JsonRpcTestCase
+final class EntityConversionTest extends JsonRpcTestCase
 {
     public function testEntitySerialization()
     {
@@ -13,7 +13,7 @@ class EntityConversionTest extends JsonRpcTestCase
             self::createClient(),
             '/test/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'entity',
                 'id'      => 'test',
                 'params'  => [
@@ -28,10 +28,13 @@ class EntityConversionTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
-        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}));
+        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
         self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'});
 
-        self::assertFalse(isset($jsonResponse->getBody()->{'private_payload'}));
+        self::assertFalse(
+            isset($jsonResponse->getBody()->{'private_payload'}),
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
     }
 
     public function testPrivateEntityFields()
@@ -40,7 +43,7 @@ class EntityConversionTest extends JsonRpcTestCase
             self::createClient(),
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'entity/private',
                 'id'      => 'test',
                 'params'  => [
@@ -54,17 +57,26 @@ class EntityConversionTest extends JsonRpcTestCase
         self::assertInstanceOf(\stdClass::class, $content);
 
         $jsonResponse = new SyncResponse($content);
-        self::assertTrue($jsonResponse->isSuccessful());
-        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'});
-
-        self::assertTrue(
-            isset($jsonResponse->getBody()->{'private_payload'}),
+        self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()->{'sample_payload'},
             json_encode($content, JSON_PRETTY_PRINT)
         );
-        self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'});
-    }
 
+        if (static::$kernel->getContainer()->has('jms_serializer')) {
+            self::assertTrue(
+                isset($jsonResponse->getBody()->{'private_payload'}),
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
+            self::assertEquals(
+                'secret-payload',
+                $jsonResponse->getBody()->{'private_payload'},
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
+        }
+    }
 
     public function testNestedContext()
     {
@@ -72,7 +84,7 @@ class EntityConversionTest extends JsonRpcTestCase
             self::createClient(),
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'entity/nested',
                 'id'      => 'test',
                 'params'  => [
@@ -86,14 +98,24 @@ class EntityConversionTest extends JsonRpcTestCase
         self::assertInstanceOf(\stdClass::class, $content);
 
         $jsonResponse = new SyncResponse($content);
-        self::assertTrue($jsonResponse->isSuccessful());
-        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()->{'sample_payload'});
-
-        self::assertTrue(
-            isset($jsonResponse->getBody()->{'private_payload'}),
+        self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertTrue(isset($jsonResponse->getBody()->{'sample_payload'}), json_encode($content, JSON_PRETTY_PRINT));
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()->{'sample_payload'},
             json_encode($content, JSON_PRETTY_PRINT)
         );
-        self::assertEquals('secret-payload', $jsonResponse->getBody()->{'private_payload'});
+
+        if (static::$kernel->getContainer()->has('jms_serializer')) {
+            self::assertTrue(
+                isset($jsonResponse->getBody()->{'private_payload'}),
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
+            self::assertEquals(
+                'secret-payload',
+                $jsonResponse->getBody()->{'private_payload'},
+                json_encode($content, JSON_PRETTY_PRINT)
+            );
+        }
     }
 }

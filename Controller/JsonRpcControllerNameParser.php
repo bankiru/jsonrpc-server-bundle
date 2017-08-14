@@ -10,6 +10,6 @@ final class JsonRpcControllerNameParser extends RpcControllerNameParser
     /** {@inheritdoc} */
     protected function guessControllerClassName(BundleInterface $bundle, $controller)
     {
-        return $bundle->getNamespace().'\\JsonRpc\\'.$controller.'Controller';
+        return $bundle->getNamespace() . '\\JsonRpc\\' . $controller . 'Controller';
     }
 }

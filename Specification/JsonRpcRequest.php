@@ -2,12 +2,12 @@
 
 namespace Bankiru\Api\JsonRpc\Specification;
 
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use Bankiru\Api\JsonRpc\Exception\InvalidRequestException;
 use Bankiru\Api\JsonRpc\Exception\JsonRpcException;
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
-use ScayTrase\Api\JsonRpc\JsonRpcError;
 use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 
+/** @internal */
 final class JsonRpcRequest implements JsonRpcRequestInterface
 {
     /** @var  string|null */
@@ -16,12 +16,6 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
     private $method;
     /** @var  mixed|\stdClass */
     private $parameters;
-
-    /** @return bool True if request should not receive response from the server */
-    public function isNotification()
-    {
-        return null === $this->id;
-    }
 
     /**
      * @param \stdClass $source
@@ -44,8 +38,11 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
             throw InvalidRequestException::missingFields($missing);
         }
 
-        if (JsonRpcBundle::VERSION !== $source->jsonrpc) {
-            throw InvalidRequestException::invalidVersion(JsonRpcBundle::VERSION, $source->jsonrpc);
+        if (BankiruJsonRpcServerBundle::JSONRPC_VERSION !== $source->jsonrpc) {
+            throw InvalidRequestException::invalidVersion(
+                BankiruJsonRpcServerBundle::JSONRPC_VERSION,
+                $source->jsonrpc
+            );
         }
 
         $request->id         = isset($source->id) ? $source->id : null;
@@ -53,6 +50,12 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
         $request->parameters = isset($source->params) ? json_decode(json_encode($source->params), true) : null;
 
         return $request;
+    }
+
+    /** {@inheritdoc} */
+    public function isNotification()
+    {
+        return null === $this->id;
     }
 
     /** {@inheritdoc} */
@@ -69,7 +72,7 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
     /** {@inheritdoc} */
     public function getVersion()
     {
-        return JsonRpcBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
     /** @return string */
@@ -78,13 +81,13 @@ final class JsonRpcRequest implements JsonRpcRequestInterface
         return $this->method;
     }
 
-    /** @return array */
+    /** {@inheritdoc} */
     public function getParameters()
     {
         return $this->parameters;
     }
 
-    /** @return int|null Id. if not a notification and id is not set - id should be automatically generated */
+    /** {@inheritdoc} */
     public function getId()
     {
         return $this->id;

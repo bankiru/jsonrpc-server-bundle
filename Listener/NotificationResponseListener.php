@@ -17,7 +17,7 @@ final class NotificationResponseListener
      */
     public function onNullResponse(ViewEvent $event)
     {
-        $request  = $event->getRequest();
+        $request = $event->getRequest();
 
         if (!$request instanceof JsonRpcRequestInterface) {
             return;

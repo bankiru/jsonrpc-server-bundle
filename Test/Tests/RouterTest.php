@@ -7,7 +7,7 @@ use Bankiru\Api\Rpc\Routing\Router;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Routing\RequestContext;
 
-class RouterTest extends WebTestCase
+final class RouterTest extends WebTestCase
 {
     public function testHttpRoutes()
     {
@@ -16,18 +16,18 @@ class RouterTest extends WebTestCase
         $context = new RequestContext();
         $context->setMethod('POST');
         $router->setContext($context);
-        $router->match('/test/');
+        self::assertNotEmpty($router->match('/test/'));
     }
 
     public function testRpcRouterCollection()
     {
         $client = self::createClient();
 
-        foreach (['test', 'test_private'] as $endpoint) /** @var MethodCollection $collection */ {
+        foreach (['test', 'test_private'] as $endpoint) {
             /** @var Router $router */
-            $router = $client->getContainer()->get('rpc.endpoint_router.' . $endpoint);
+            $router = $client->getContainer()->get('rpc_server.endpoint_router.' . $endpoint);
             self::assertNotNull($router);
-            $collection = $router->getCollection();
+            $collection = $router->getMethodCollection();
             self::assertNotNull($router);
             self::assertInstanceOf(MethodCollection::class, $collection);
 

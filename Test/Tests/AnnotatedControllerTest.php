@@ -2,12 +2,10 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
-class AnnotatedControllerTest extends JsonRpcTestCase
+final class AnnotatedControllerTest extends JsonRpcTestCase
 {
     public function testNestedContext()
     {
@@ -16,7 +14,7 @@ class AnnotatedControllerTest extends JsonRpcTestCase
             $client,
             '/test/private/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
                 'method'  => 'prefix/annotation/sub',
                 'id'      => 'test',
                 'params'  => [
@@ -30,16 +28,16 @@ class AnnotatedControllerTest extends JsonRpcTestCase
         self::assertInstanceOf(\stdClass::class, $content);
 
         $jsonResponse = new SyncResponse($content);
-        self::assertTrue($jsonResponse->isSuccessful());
+        self::assertTrue($jsonResponse->isSuccessful(), json_encode($content, JSON_PRETTY_PRINT));
     }
 
     /**
      * @expectedException \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
-     * @expectedExceptionMessage Not an valid JSON request
+     * @expectedExceptionMessage Not a valid JSON-RPC request
      */
     public function testEmptyRequest()
     {
-        $client   = self::createClient();
+        $client = self::createClient();
         $this->sendRequest(
             $client,
             '/test/private/',

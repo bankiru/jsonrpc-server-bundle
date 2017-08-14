@@ -2,10 +2,11 @@
 
 namespace Bankiru\Api\JsonRpc\Specification;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\JsonRpcResponseInterface;
 use ScayTrase\Api\Rpc\RpcErrorInterface;
 
+/** @internal */
 final class JsonRpcResponse implements JsonRpcResponseInterface
 {
     /** @var  string */
@@ -29,22 +30,17 @@ final class JsonRpcResponse implements JsonRpcResponseInterface
         $this->error = $error;
     }
 
-
-    /**
-     * @return string JSON-RPC version
-     */
+    /** {@inheritdoc} */
     public function getVersion()
     {
-        return JsonRpcBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    /** {@inheritdoc} */
     public function jsonSerialize()
     {
         $result = [
-            self::VERSION_FIELD => JsonRpcBundle::VERSION,
+            self::VERSION_FIELD => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
             self::ID_FIELD      => $this->getId(),
         ];
 
@@ -59,25 +55,25 @@ final class JsonRpcResponse implements JsonRpcResponseInterface
         return $result;
     }
 
-    /** @return string|null Response ID or null for notification pseudo-response */
+    /** {@inheritdoc} */
     public function getId()
     {
         return $this->id;
     }
 
-    /** @return bool */
+    /** {@inheritdoc} */
     public function isSuccessful()
     {
         return $this->getError() === null;
     }
 
-    /** @return RpcErrorInterface|null */
+    /** {@inheritdoc} */
     public function getError()
     {
         return $this->error;
     }
 
-    /** @return \stdClass|\stdClass[]|null */
+    /** {@inheritdoc} */
     public function getBody()
     {
         return $this->body;

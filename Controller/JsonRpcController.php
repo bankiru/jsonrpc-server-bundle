@@ -2,6 +2,7 @@
 
 namespace Bankiru\Api\JsonRpc\Controller;
 
+use Bankiru\Api\JsonRpc\Exception\InvalidRequestException;
 use Bankiru\Api\JsonRpc\Exception\RpcMethodNotFoundException;
 use Bankiru\Api\JsonRpc\Http\JsonRpcHttpResponse;
 use Bankiru\Api\JsonRpc\Specification\JsonRpcRequest;
@@ -23,14 +24,15 @@ final class JsonRpcController extends RpcController
      *
      * @throws BadRequestHttpException
      * @throws RpcMethodNotFoundException
+     * @throws InvalidRequestException
      */
     public function jsonRpcAction(Request $request)
     {
         $request->attributes->set('_format', 'json');
 
         $jsonrpc = json_decode($request->getContent());
-        if (null === $jsonrpc || json_last_error() !== JSON_ERROR_NONE) {
-            throw new BadRequestHttpException('Not an valid JSON request');
+        if ((!is_array($jsonrpc) && !is_object($jsonrpc)) || json_last_error() !== JSON_ERROR_NONE) {
+            throw new BadRequestHttpException('Not a valid JSON-RPC request');
         }
 
         $singleRequest = false;
@@ -41,6 +43,9 @@ final class JsonRpcController extends RpcController
 
         $responses = [];
         foreach ($jsonrpc as $call) {
+            if (!$call instanceof \stdClass) {
+                throw InvalidRequestException::notAJsonRpc();
+            }
             $response = $this->handle($call, $request->get('_route'));
             if (null !== $response) {
                 $responses[] = $response;
@@ -59,7 +64,7 @@ final class JsonRpcController extends RpcController
      */
     protected function getResolver()
     {
-        return $this->get('jsonrpc.controller_resolver');
+        return $this->get('jsonrpc_server.controller_resolver');
     }
 
     /**

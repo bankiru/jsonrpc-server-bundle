@@ -2,12 +2,12 @@
 
 namespace Bankiru\Api\JsonRpc\Specification;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
-use Bankiru\Api\Rpc\Http\RequestInterface;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
+use Bankiru\Api\Rpc\RpcRequestInterface;
 use ScayTrase\Api\JsonRpc\JsonRpcRequestInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 
-final class RichJsonRpcRequest implements RequestInterface, JsonRpcRequestInterface
+final class RichJsonRpcRequest implements RpcRequestInterface, JsonRpcRequestInterface
 {
     /** @var  JsonRpcRequestInterface */
     private $request;
@@ -23,11 +23,7 @@ final class RichJsonRpcRequest implements RequestInterface, JsonRpcRequestInterf
     public function __construct(JsonRpcRequestInterface $request, ParameterBag $attributes = null)
     {
         $this->request    = $request;
-        $this->attributes = $attributes;
-
-        if (null === $this->attributes) {
-            $this->attributes = new ParameterBag();
-        }
+        $this->attributes = $attributes ?: new ParameterBag();
     }
 
     /** {@inheritdoc} */
@@ -56,7 +52,7 @@ final class RichJsonRpcRequest implements RequestInterface, JsonRpcRequestInterf
     /** {@inheritdoc} */
     public function getVersion()
     {
-        return JsonRpcBundle::VERSION;
+        return BankiruJsonRpcServerBundle::JSONRPC_VERSION;
     }
 
     /** {@inheritdoc} */

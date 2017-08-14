@@ -1,36 +1,53 @@
 language: php
 
 php:
-  - 5.5
-  - 5.6
-  - 7
   - nightly
-  - hhvm
+  - 7.1
+  - 7
+  - 5.6
+  - 5.5
+
+## Run on container environment
+sudo: false
+
+## Cache composer bits
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 env:
-  - PACKAGES='symfony/symfony=2.7.*'
-  - PACKAGES='symfony/symfony=2.8.*'
-  - PACKAGES='symfony/symfony=3.1.*'
+  - PACKAGES='symfony/symfony=~3.4' STABILITY=dev
+  - PACKAGES='symfony/symfony=3.3.*'
   - PACKAGES='symfony/symfony=3.2.*'
-  - PACKAGES='symfony/symfony=~3.3@dev'
+  - PACKAGES='symfony/symfony=2.8.*'
+  - PACKAGES='symfony/symfony=2.7.*'
 
 matrix:
+  fast_finish: true
   include:
-    - php: 5.5
-      env: PACKAGES='symfony/symfony=2.7.*' deps='low'
+    - php: 7.1
+      env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
+    - php: nightly
+      env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
 
   allow_failures:
-    - php: hhvm
     - php: nightly
+    - env: PACKAGES='symfony/symfony=~4.0' STABILITY=dev
 
 before_install:
   - travis_retry composer self-update
 
 install:
   - composer require --no-update ${PACKAGES}
-  - if [ "$deps" = "no"] || [ -z "$deps" ]; then composer --prefer-source install; fi;
-  - if [ "$deps" = "low" ]; then composer --prefer-source --prefer-lowest --prefer-stable update; composer --prefer-source install; fi;
+  - if [ "$STABILITY" = "dev" ]; then composer config minimum-stability dev; fi;
+  - composer --prefer-source install
 
 script:
+  - rm -rf build
   - mkdir -p build
-  - vendor/bin/phpunit --colors -c phpunit.xml
+  - vendor/bin/phpunit --colors -c phpunit.xml --testsuite unit
+  - vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - JMS_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - SYMFONY_SERIALIZER=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - JMS_BUNDLE=1 DOCTRINE_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration
+  - SYMFONY_SERIALIZER=1 DOCTRINE_BUNDLE=1 vendor/bin/phpunit --colors -c phpunit.xml --testsuite integration

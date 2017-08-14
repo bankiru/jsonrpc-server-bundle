@@ -2,10 +2,10 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Tests;
 
-use Bankiru\Api\JsonRpc\JsonRpcBundle;
+use Bankiru\Api\JsonRpc\BankiruJsonRpcServerBundle;
 use ScayTrase\Api\JsonRpc\SyncResponse;
 
-class SampleControllerTest extends JsonRpcTestCase
+final class SampleControllerTest extends JsonRpcTestCase
 {
     public function testBatchRequest()
     {
@@ -14,19 +14,19 @@ class SampleControllerTest extends JsonRpcTestCase
             '/test/',
             [
                 [
-                    'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'sample',
-                    'id' => 'test',
-                    'params' => [
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
+                    'method'  => 'sample',
+                    'id'      => 'test',
+                    'params'  => [
                         'param1' => 'value1',
                         'param2' => 100500,
                     ],
                 ],
                 [
                     //notification - no id
-                    'jsonrpc' => JsonRpcBundle::VERSION,
-                    'method' => 'notification',
-                    'param' => [
+                    'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
+                    'method'  => 'notification',
+                    'param'   => [
                         'notification' => 'message',
                     ],
                 ],
@@ -42,10 +42,10 @@ class SampleControllerTest extends JsonRpcTestCase
             self::createClient(),
             '/test/',
             [
-                'jsonrpc' => JsonRpcBundle::VERSION,
-                'method' => 'array',
-                'id' => 'test',
-                'params' => [
+                'jsonrpc' => BankiruJsonRpcServerBundle::JSONRPC_VERSION,
+                'method'  => 'array',
+                'id'      => 'test',
+                'params'  => [
                     'payload' => 'my-payload',
                 ],
             ]
@@ -57,7 +57,14 @@ class SampleControllerTest extends JsonRpcTestCase
 
         $jsonResponse = new SyncResponse($content);
         self::assertTrue($jsonResponse->isSuccessful(), json_encode($content));
-        self::assertTrue(isset($jsonResponse->getBody()[0]->{'sample_payload'}));
-        self::assertEquals('my-payload', $jsonResponse->getBody()[0]->{'sample_payload'});
+        self::assertTrue(
+            isset($jsonResponse->getBody()[0]->{'sample_payload'}),
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
+        self::assertEquals(
+            'my-payload',
+            $jsonResponse->getBody()[0]->{'sample_payload'},
+            json_encode($content, JSON_PRETTY_PRINT)
+        );
     }
 }

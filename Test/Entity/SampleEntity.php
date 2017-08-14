@@ -2,33 +2,14 @@
 
 namespace Bankiru\Api\JsonRpc\Test\Entity;
 
-use JMS\Serializer\Annotation\Expose;
-use JMS\Serializer\Annotation\Groups;
-use JMS\Serializer\Annotation\SerializedName;
-use JMS\Serializer\Annotation\Since;
-use JMS\Serializer\Annotation\Type;
-
-class SampleEntity
+class SampleEntity implements \JsonSerializable
 {
-    /**
-     * @var int|null
-     */
+    /** @var int|null */
     private $id;
-    /**
-     * @var  string
-     * @Type("string")
-     * @SerializedName("sample_payload")
-     * @Expose()
-     */
+    /** @var  string */
     private $payload;
-    /**
-     * @var  string
-     * @Type("string")
-     * @SerializedName("private_payload")
-     * @Expose()
-     * @Groups({"private"})
-     * @Since("0.1")
-     */
+
+    /** @var  string */
     private $secret;
 
     /**
@@ -56,5 +37,14 @@ class SampleEntity
     public function getPayload()
     {
         return $this->payload;
+    }
+
+    /** {@inheritdoc} */
+    public function jsonSerialize()
+    {
+        return [
+            'id'             => $this->id,
+            'sample_payload' => $this->payload,
+        ];
     }
 }

@@ -1,0 +1,7 @@
+doctrine:
+  dbal:
+    driver: pdo_sqlite
+    memory: true
+  orm:
+    auto_mapping: true
+    auto_generate_proxy_classes: true

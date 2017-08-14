@@ -6,12 +6,9 @@ use Bankiru\Api\Rpc\Routing\Annotation\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
- * Class AnnotationController
- *
- * @package Bankiru\Api\JsonRpc\Test\JsonRpc
  * @Method("annotation")
  */
-class AnnotationController extends Controller
+final class AnnotationController extends Controller
 {
     /**
      * @return array
